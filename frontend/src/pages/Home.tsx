@@ -1,134 +1,177 @@
-import React from "react";
-import { Card, Row, Col } from "antd";
-import BarChart from "../components/Charts/BarChart";
-import LineChart from "../components/Charts/LineChart";
-import PieChart from "../components/Charts/PieChart";
-import DoughnutChart from "../components/Charts/DoughnutChart";
-import RadarChart from "../components/Charts/RadarChart";
-import PolarAreaChart from "../components/Charts/PolarAreaChart";
-import BubbleChart from "../components/Charts/BubbleChart";
-import ScatterChart from "../components/Charts/ScatterChart";
+import type { ChartLayoutItem } from "../components/Charts/TChartType";
+import Dashboard from "../components/Dashboard/Dashboard";
 
-// ตัวอย่างข้อมูล mock สำหรับแต่ละ chart
-const barData = {
-  labels: ["A", "B", "C"],
-  datasets: [{ label: "Bar", data: [12, 19, 3], backgroundColor: "#2563eb" }],
-};
-const lineData = {
-  labels: ["A", "B", "C"],
-  datasets: [{ label: "Line", data: [5, 10, 7], borderColor: "#6366f1" }],
-};
-const pieData = {
-  labels: ["A", "B", "C"],
-  datasets: [
+const Home = () => {
+  const chartItems: ChartLayoutItem[] = [
     {
-      label: "Pie",
-      data: [10, 20, 30],
-      backgroundColor: ["#2563eb", "#6366f1", "#06b6d4"],
+      key: "bar",
+      title: "Bar Chart",
+      chartType: "bar",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          { label: "Bar", data: [12, 19, 3], backgroundColor: "#2563eb" },
+        ],
+      },
+      i: "bar",
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
     },
-  ],
-};
-const doughnutData = {
-  labels: ["A", "B", "C"],
-  datasets: [
     {
-      label: "Doughnut",
-      data: [15, 25, 10],
-      backgroundColor: ["#22c55e", "#f59e42", "#ef4444"],
+      key: "line",
+      title: "Line Chart",
+      chartType: "line",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          {
+            label: "Line",
+            data: [5, 10, 7],
+            borderColor: "#6366f1",
+            fill: false,
+          },
+        ],
+      },
+      i: "line",
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
     },
-  ],
-};
-const radarData = {
-  labels: ["A", "B", "C"],
-  datasets: [
     {
-      label: "Radar",
-      data: [9, 14, 8],
-      backgroundColor: "rgba(99,102,241,0.2)",
-      borderColor: "#6366f1",
+      key: "pie",
+      title: "Pie Chart",
+      chartType: "pie",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          {
+            label: "Pie",
+            data: [10, 20, 30],
+            backgroundColor: ["#2563eb", "#6366f1", "#06b6d4"],
+          },
+        ],
+      },
+      i: "pie",
+      x: 4,
+      y: 0,
+      w: 2,
+      h: 2,
     },
-  ],
-};
-const polarAreaData = {
-  labels: ["A", "B", "C"],
-  datasets: [
     {
-      label: "Polar",
-      data: [11, 16, 6],
-      backgroundColor: ["#06b6d4", "#22c55e", "#ef4444"],
+      key: "doughnut",
+      title: "Doughnut Chart",
+      chartType: "doughnut",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          {
+            label: "Doughnut",
+            data: [15, 25, 10],
+            backgroundColor: ["#22c55e", "#f59e42", "#ef4444"],
+          },
+        ],
+      },
+      i: "doughnut",
+      x: 6,
+      y: 0,
+      w: 2,
+      h: 2,
     },
-  ],
-};
-const bubbleData = {
-  datasets: [
     {
-      label: "Bubble",
-      data: [
-        { x: 10, y: 20, r: 10 },
-        { x: 15, y: 10, r: 15 },
-      ],
-      backgroundColor: "#2563eb",
+      key: "radar",
+      title: "Radar Chart",
+      chartType: "radar",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          {
+            label: "Radar",
+            data: [9, 14, 8],
+            backgroundColor: "rgba(99,102,241,0.2)",
+            borderColor: "#6366f1",
+          },
+        ],
+      },
+      i: "radar",
+      x: 0,
+      y: 2,
+      w: 2,
+      h: 2,
     },
-  ],
-};
-const scatterData = {
-  datasets: [
     {
-      label: "Scatter",
-      data: [
-        { x: 5, y: 7 },
-        { x: 10, y: 14 },
-      ],
-      backgroundColor: "#6366f1",
+      key: "polarArea",
+      title: "Polar Area Chart",
+      chartType: "polarArea",
+      chartData: {
+        labels: ["A", "B", "C"],
+        datasets: [
+          {
+            label: "Polar",
+            data: [11, 16, 6],
+            backgroundColor: ["#06b6d4", "#22c55e", "#ef4444"],
+          },
+        ],
+      },
+      i: "polarArea",
+      x: 2,
+      y: 2,
+      w: 2,
+      h: 2,
     },
-  ],
-};
+    {
+      key: "bubble",
+      title: "Bubble Chart",
+      chartType: "bubble",
+      chartData: {
+        datasets: [
+          {
+            label: "Bubble",
+            data: [
+              { x: 10, y: 20, r: 10 },
+              { x: 15, y: 10, r: 15 },
+            ],
+            backgroundColor: "#2563eb",
+          },
+        ],
+      },
+      i: "bubble",
+      x: 4,
+      y: 2,
+      w: 2,
+      h: 2,
+    },
+    {
+      key: "scatter",
+      title: "Scatter Chart",
+      chartType: "scatter",
+      chartData: {
+        datasets: [
+          {
+            label: "Scatter",
+            data: [
+              { x: 5, y: 7 },
+              { x: 10, y: 14 },
+            ],
+            backgroundColor: "#6366f1",
+          },
+        ],
+      },
+      i: "scatter",
+      x: 6,
+      y: 2,
+      w: 2,
+      h: 2,
+    },
+  ];
 
-const Home: React.FC = () => (
-  <div className="p-4">
-    <Row gutter={[16, 16]}>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Bar Chart">
-          <BarChart data={barData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Line Chart">
-          <LineChart data={lineData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Pie Chart">
-          <PieChart data={pieData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Doughnut Chart">
-          <DoughnutChart data={doughnutData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Radar Chart">
-          <RadarChart data={radarData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Polar Area Chart">
-          <PolarAreaChart data={polarAreaData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Bubble Chart">
-          <BubbleChart data={bubbleData} />
-        </Card>
-      </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Card title="Scatter Chart">
-          <ScatterChart data={scatterData} />
-        </Card>
-      </Col>
-    </Row>
-  </div>
-);
+  return (
+    <div className="p-4">
+      <Dashboard ChartItem={chartItems} />
+    </div>
+  );
+};
 
 export default Home;
