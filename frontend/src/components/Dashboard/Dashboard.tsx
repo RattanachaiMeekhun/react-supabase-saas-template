@@ -2,16 +2,12 @@ import React from "react";
 import { Responsive, WidthProvider, type Layouts } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import BarChart from "../Charts/BarChart";
 import type { ChartLayoutItem } from "../Charts/TChartType";
-import type { ChartData } from "chart.js";
-import LineChart from "../Charts/LineChart";
-import PieChart from "../Charts/PieChart";
-import DoughnutChart from "../Charts/DoughnutChart";
-import RadarChart from "../Charts/RadarChart";
-import PolarAreaChart from "../Charts/PolarAreaChart";
-import ScatterChart from "../Charts/ScatterChart";
-import BubbleChart from "../Charts/BubbleChart";
+import { renderChartItem } from "../../helper/dashboardHelper";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../redux/redux";
+import { Input } from "antd";
+import { setTitle } from "../../redux/slices/dashboardSlice";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -21,6 +17,11 @@ type DashboardProps = {
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const { ChartItem } = props;
+  const { title } = useSelector((state: RootState) => state.dashboard);
+  const dispatch = useDispatch();
+  if (!ChartItem || ChartItem.length === 0) {
+    return <div className="text-center text-gray-500">No charts available</div>;
+  }
 
   const layouts: Layouts = {
     lg: ChartItem.map((item, i) => ({
@@ -60,80 +61,17 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     })),
   };
 
-  const renderChartItem = (item: ChartLayoutItem) => {
-    const { key, title, chartType, chartData } = item;
-    switch (chartType) {
-      case "bar":
-        return (
-          <BarChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"bar">}
-          />
-        );
-      case "line":
-        return (
-          <LineChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"line">}
-          />
-        );
-      case "pie":
-        return (
-          <PieChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"pie">}
-          />
-        );
-      case "doughnut":
-        return (
-          <DoughnutChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"doughnut">}
-          />
-        );
-      case "radar":
-        return (
-          <RadarChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"radar">}
-          />
-        );
-      case "polarArea":
-        return (
-          <PolarAreaChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"polarArea">}
-          />
-        );
-      case "scatter":
-        return (
-          <ScatterChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"scatter">}
-          />
-        );
-      case "bubble":
-        return (
-          <BubbleChart
-            key={key}
-            title={title}
-            data={chartData as ChartData<"bubble">}
-          />
-        );
-      default:
-        return <div>Unsupported chart type</div>;
-    }
-  };
-
   return (
-    <div className="p-4">
+    <div className="mx-6">
+      <div className="text-2xl font-bold h-10 text-center">{title}</div>
+      <Input
+        className="!text-2xl font-bold h-10 !text-[#ffffff]"
+        value={title}
+        variant="borderless"
+        onChange={(e) => {
+          dispatch(setTitle(e.target.value));
+        }}
+      />
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}

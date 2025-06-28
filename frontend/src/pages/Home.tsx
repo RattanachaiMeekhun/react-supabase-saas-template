@@ -1,3 +1,4 @@
+import { Layout } from "antd";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import Dashboard from "../components/Dashboard/Dashboard";
 
@@ -167,11 +168,7 @@ const Home = () => {
     },
   ];
 
-  return (
-    <div className="p-4">
-      <Dashboard ChartItem={chartItems} />
-    </div>
-  );
+  return <Dashboard ChartItem={chartItems} />;
 };
 
 export default Home;

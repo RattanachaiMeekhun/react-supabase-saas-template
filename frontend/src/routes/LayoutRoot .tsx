@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import BaseNavLink from "../components/Nav/BaseNavLink";
-
 const LayoutRoot: React.FC = () => {
   return (
     <div className={"flex flex-col h-screen w-screen"}>
@@ -16,7 +15,7 @@ const LayoutRoot: React.FC = () => {
         </nav>
         <span className="text-sm">Welcome, User!</span>
       </header>
-      <main className="flex-1 container mx-auto">
+      <main className="flex-1">
         <Outlet />
       </main>
       <footer className="border-t px-4 py-3 text-center text-muted-foreground text-sm">
