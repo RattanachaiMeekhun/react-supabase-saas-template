@@ -11,71 +11,30 @@ import type { ChartLayoutItem } from "../components/Charts/TChartType";
 
 export const renderChartItem = (item: ChartLayoutItem) => {
   const { key, title, chartType, chartData } = item;
+
   switch (chartType) {
     case "bar":
-      return (
-        <BarChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"bar">}
-        />
-      );
+      return <BarChart data={chartData as ChartData<"bar">} {...item} />;
     case "line":
-      return (
-        <LineChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"line">}
-        />
-      );
+      return <LineChart {...item} data={chartData as ChartData<"line">} />;
     case "pie":
-      return (
-        <PieChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"pie">}
-        />
-      );
+      return <PieChart {...item} data={chartData as ChartData<"pie">} />;
     case "doughnut":
       return (
-        <DoughnutChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"doughnut">}
-        />
+        <DoughnutChart {...item} data={chartData as ChartData<"doughnut">} />
       );
     case "radar":
-      return (
-        <RadarChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"radar">}
-        />
-      );
+      return <RadarChart {...item} data={chartData as ChartData<"radar">} />;
     case "polarArea":
       return (
-        <PolarAreaChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"polarArea">}
-        />
+        <PolarAreaChart {...item} data={chartData as ChartData<"polarArea">} />
       );
     case "scatter":
       return (
-        <ScatterChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"scatter">}
-        />
+        <ScatterChart {...item} data={chartData as ChartData<"scatter">} />
       );
     case "bubble":
-      return (
-        <BubbleChart
-          key={key}
-          title={title}
-          data={chartData as ChartData<"bubble">}
-        />
-      );
+      return <BubbleChart {...item} data={chartData as ChartData<"bubble">} />;
     default:
       return <div>Unsupported chart type</div>;
   }

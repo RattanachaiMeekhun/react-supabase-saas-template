@@ -1,6 +1,7 @@
 import { Bubble } from "react-chartjs-2";
 import type { ChartData, ChartOptions } from "chart.js";
 import type { BaseChartType } from "./TChartType";
+import ChartDetailDisplay from "./ChartDetailDisplay";
 
 type BubbleChartProps = BaseChartType & {
   data: ChartData<"bubble">;
@@ -8,17 +9,17 @@ type BubbleChartProps = BaseChartType & {
 };
 
 const BubbleChart: React.FC<BubbleChartProps> = (props) => {
-  const { data, options, title } = props;
+  const { data, options } = props;
 
   return (
-    <div className="h-full w-full">
-      <label className="text-center text-lg font-semibold mb-4 text-black">
-        {title}
-      </label>
-      <Bubble
-        data={data}
-        options={{ responsive: true, maintainAspectRatio: true, ...options }}
-      />
+    <div className="h-full w-full flex flex-col text-center items-center justify-center">
+      <ChartDetailDisplay {...props} />
+      <div className="h-full w-full flex items-center justify-center overflow-hidden">
+        <Bubble
+          data={data}
+          options={{ responsive: true, maintainAspectRatio: false, ...options }}
+        />
+      </div>
     </div>
   );
 };

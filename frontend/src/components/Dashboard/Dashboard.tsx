@@ -3,11 +3,11 @@ import { Responsive, WidthProvider, type Layouts } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import type { ChartLayoutItem } from "../Charts/TChartType";
-import { renderChartItem } from "../../helper/dashboardHelper";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/redux";
-import { Input } from "antd";
+import { Typography } from "antd";
 import { setTitle } from "../../redux/slices/dashboardSlice";
+import ChartItemCard from "./ChartItemCard";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -63,15 +63,17 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
   return (
     <div className="mx-6">
-      <div className="text-2xl font-bold h-10 text-center">{title}</div>
-      <Input
-        className="!text-2xl font-bold h-10 !text-[#ffffff]"
-        value={title}
-        variant="borderless"
-        onChange={(e) => {
-          dispatch(setTitle(e.target.value));
+      <Typography.Title
+        className="text-center text-sm mt-2 text-amber-50"
+        editable={{
+          onChange: (value) => {
+            dispatch(setTitle(value || "Dashboard"));
+          },
         }}
-      />
+      >
+        {title}
+      </Typography.Title>
+
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
@@ -86,10 +88,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           return (
             <div
               key={item.key}
-              className="border px-1 pt-1 pb-7 bg-white shadow rounded-lg relative"
+              className="border bg-white shadow rounded-lg relative"
             >
-              <div className="drag-handle cursor-move w-5 h-5 rounded-full absolute top-2 right-2 z-10" />
-              {renderChartItem(item)}
+              {ChartItemCard(item)}
             </div>
           );
         })}
