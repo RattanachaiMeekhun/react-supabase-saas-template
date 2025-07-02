@@ -10,7 +10,7 @@ import ScatterChart from "../components/Charts/ScatterChart";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 
 export const renderChartItem = (item: ChartLayoutItem) => {
-  const { key, title, chartType, chartData } = item;
+  const { chartType, chartData } = item;
 
   switch (chartType) {
     case "bar":
