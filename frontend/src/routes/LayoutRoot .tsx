@@ -58,7 +58,7 @@ const LayoutRoot: React.FC = () => {
         </div>
       </Sider>
      <Layout >
-        <Header >
+        <Header className="bg-[#1d4ed8] text-white flex items-center justify-between !px-4 border-b-2 border-[#27272a]">
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
