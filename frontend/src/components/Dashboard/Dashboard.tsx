@@ -6,7 +6,7 @@ import type { ChartLayoutItem } from "../Charts/TChartType";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/redux";
 import { Typography, Button, Space } from "antd";
-import { DownloadOutlined, FileTextOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { DownloadOutlined, FileTextOutlined } from "@ant-design/icons";
 import { setTitle } from "../../redux/slices/dashboardSlice";
 import ChartItemCard from "./ChartItemCard";
 import { exportDashboardToPDF } from "../../utils/pdfExport";
