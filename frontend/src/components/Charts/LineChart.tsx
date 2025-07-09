@@ -14,10 +14,14 @@ const LineChart: React.FC<LineChartProps> = (props) => {
   return (
     <div className="h-full w-full flex flex-col text-center">
       <ChartDetailDisplay {...props} />
+      <div className="h-full w-full flex items-center justify-center overflow-hidden">
+
       <Line
         data={data}
-        options={{ responsive: true, maintainAspectRatio: false, ...options }}
+        options={{ responsive: true, maintainAspectRatio: false, ...options  }}
+        updateMode="resize"
       />
+      </div>
     </div>
   );
 };

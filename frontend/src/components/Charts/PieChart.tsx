@@ -23,7 +23,6 @@ const PieChart: React.FC<PieChartProps> = (props) => {
       <ChartDetailDisplay {...props} />
       <div className="h-full w-full flex items-center justify-center overflow-hidden">
         <Pie
-          key={props.key}
           ref={chartRef}
           data={data}
           options={{

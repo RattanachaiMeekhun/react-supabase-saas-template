@@ -5,12 +5,13 @@ type Props = {
   to: string;
   end?: boolean;
   children: React.ReactNode;
+  className?: string;
 };
 
 const BaseNavLink = (props: Props) => {
   return (
     <NavLink
-      className="p-1 rounded-full w-[100px] text-center"
+      className={props.className || "p-1 rounded-full w-[100px] text-center"}
       to={props.to}
       end={props.end}
     >

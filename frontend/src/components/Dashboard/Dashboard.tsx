@@ -62,9 +62,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   };
 
   return (
-    <div className="mx-6">
+    <div className="mx-6 min-h-screen">
       <Typography.Title
-        className="text-center text-sm mt-2 text-amber-50"
+        className="text-center text-sm mt-2 !text-white"
         editable={{
           onChange: (value) => {
             dispatch(setTitle(value || "Dashboard"));
@@ -73,9 +73,16 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       >
         {title}
       </Typography.Title>
-
-      <ResponsiveGridLayout
-        className="layout"
+  <div className="relative">
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
+          backgroundSize: '20px 20px'
+        }}
+      />
+         <ResponsiveGridLayout
+        className="layout border-[#392e4e] border-2 rounded-lg"
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
@@ -95,6 +102,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           );
         })}
       </ResponsiveGridLayout>
+</div>
     </div>
   );
 };

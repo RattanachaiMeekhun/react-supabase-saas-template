@@ -10,32 +10,32 @@ import ScatterChart from "../components/Charts/ScatterChart";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 
 export const renderChartItem = (item: ChartLayoutItem) => {
-  const { chartType, chartData } = item;
+  const { chartType, chartData, key, ...restProps } = item;
 
   switch (chartType) {
     case "bar":
-      return <BarChart data={chartData as ChartData<"bar">} {...item} />;
+      return <BarChart key={key} data={chartData as ChartData<"bar">} {...restProps} />;
     case "line":
-      return <LineChart {...item} data={chartData as ChartData<"line">} />;
+      return <LineChart key={key} data={chartData as ChartData<"line">} {...restProps} />;
     case "pie":
-      return <PieChart {...item} data={chartData as ChartData<"pie">} />;
+      return <PieChart key={key} data={chartData as ChartData<"pie">} {...restProps} />;
     case "doughnut":
       return (
-        <DoughnutChart {...item} data={chartData as ChartData<"doughnut">} />
+        <DoughnutChart key={key} data={chartData as ChartData<"doughnut">} {...restProps} />
       );
     case "radar":
-      return <RadarChart {...item} data={chartData as ChartData<"radar">} />;
+      return <RadarChart key={key} data={chartData as ChartData<"radar">} {...restProps} />;
     case "polarArea":
       return (
-        <PolarAreaChart {...item} data={chartData as ChartData<"polarArea">} />
+        <PolarAreaChart key={key} data={chartData as ChartData<"polarArea">} {...restProps} />
       );
     case "scatter":
       return (
-        <ScatterChart {...item} data={chartData as ChartData<"scatter">} />
+        <ScatterChart key={key} data={chartData as ChartData<"scatter">} {...restProps} />
       );
     case "bubble":
-      return <BubbleChart {...item} data={chartData as ChartData<"bubble">} />;
+      return <BubbleChart key={key} data={chartData as ChartData<"bubble">} {...restProps} />;
     default:
-      return <div>Unsupported chart type</div>;
+      return <div key={key}>Unsupported chart type</div>;
   }
 };
