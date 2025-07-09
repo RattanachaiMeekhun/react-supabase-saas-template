@@ -21,7 +21,6 @@ export const exportToPDF = async (
     const {
       filename = 'dashboard-export.pdf',
       quality = 1,
-      format = 'a4',
       orientation = 'landscape'
     } = options;
 
