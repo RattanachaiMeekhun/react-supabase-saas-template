@@ -1,11 +1,11 @@
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export interface ExportPDFOptions {
   filename?: string;
   quality?: number;
-  format?: 'a4' | 'a3' | 'letter';
-  orientation?: 'portrait' | 'landscape';
+  format?: "a4" | "a3" | "letter";
+  orientation?: "portrait" | "landscape";
 }
 
 /**
@@ -19,9 +19,9 @@ export const exportToPDF = async (
 ): Promise<void> => {
   try {
     const {
-      filename = 'dashboard-export.pdf',
+      filename = "dashboard-export.pdf",
       quality = 1,
-      orientation = 'landscape'
+      orientation = "landscape",
     } = options;
 
     // Create canvas from element
@@ -29,7 +29,7 @@ export const exportToPDF = async (
       scale: quality,
       useCORS: true,
       allowTaint: true,
-      backgroundColor: '#ffffff',
+      backgroundColor: "#ffffff",
       removeContainer: true,
       logging: false,
       // Add foreign object rendering to handle modern CSS
@@ -37,15 +37,17 @@ export const exportToPDF = async (
       // Skip problematic elements
       ignoreElements: (element) => {
         // Ignore elements with certain classes if needed
-        return element.classList.contains('no-export') ||
-               element.tagName === 'IFRAME' ||
-               element.tagName === 'OBJECT' ||
-               element.tagName === 'EMBED';
+        return (
+          element.classList.contains("no-export") ||
+          element.tagName === "IFRAME" ||
+          element.tagName === "OBJECT" ||
+          element.tagName === "EMBED"
+        );
       },
       // Override problematic CSS properties
       onclone: (clonedDoc) => {
         // Fix oklch colors by converting to fallback colors
-        const style = clonedDoc.createElement('style');
+        const style = clonedDoc.createElement("style");
         style.textContent = `
           * {
             color: rgb(0, 0, 0) !important;
@@ -61,32 +63,32 @@ export const exportToPDF = async (
           .shadow { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1) !important; }
         `;
         clonedDoc.head.appendChild(style);
-      }
+      },
     });
 
-    const imgData = canvas.toDataURL('image/png');
-    
+    const imgData = canvas.toDataURL("image/png");
+
     // Calculate dimensions
     const imgWidth = canvas.width;
     const imgHeight = canvas.height;
-    
+
     // Create PDF
     const pdf = new jsPDF({
       orientation,
-      unit: 'px',
-      format: [imgWidth, imgHeight]
+      unit: "px",
+      format: [imgWidth, imgHeight],
     });
 
     // Add image to PDF
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-    
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
     // Save PDF
     pdf.save(filename);
-    
-    console.log('PDF exported successfully');
+
+    console.log("PDF exported successfully");
   } catch (error) {
-    console.error('Error exporting PDF:', error);
-    throw new Error('Failed to export PDF');
+    console.error("Error exporting PDF:", error);
+    throw new Error("Failed to export PDF");
   }
 };
 
@@ -98,7 +100,8 @@ export const exportDashboardToPDF = async (
   options: ExportPDFOptions = {}
 ) => {
   const element = document.getElementById(elementId);
-  
+  console.log({ element });
+
   if (!element) {
     throw new Error(`Element with ID "${elementId}" not found`);
   }
@@ -107,20 +110,20 @@ export const exportDashboardToPDF = async (
   const originalStyles = {
     overflow: element.style.overflow,
     height: element.style.height,
-    maxHeight: element.style.maxHeight
+    maxHeight: element.style.maxHeight,
   };
 
   // Set styles for PDF export
-  element.style.overflow = 'visible';
-  element.style.height = 'auto';
-  element.style.maxHeight = 'none';
+  element.style.overflow = "visible";
+  element.style.height = "auto";
+  element.style.maxHeight = "none";
 
   try {
     await exportToPDF(element, {
-      filename: 'dashboard.pdf',
+      filename: "dashboard.pdf",
       quality: 2,
-      orientation: 'portrait',
-      ...options
+      orientation: "portrait",
+      ...options,
     });
   } finally {
     // Restore original styles

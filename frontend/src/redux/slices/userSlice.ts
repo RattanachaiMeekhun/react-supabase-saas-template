@@ -3,11 +3,13 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 type UserState = {
   name: string;
   email: string;
+  isAuthenticated: boolean;
 };
 
 const initialState: UserState = {
   name: "",
   email: "",
+  isAuthenticated: false,
 };
 
 const userSlice = createSlice({
@@ -22,6 +24,10 @@ const userSlice = createSlice({
       state.name = "";
       state.email = "";
     },
+  },
+  extraReducers: (builder) => {
+    // Add any additional reducers if needed
+    builder;
   },
 });
 

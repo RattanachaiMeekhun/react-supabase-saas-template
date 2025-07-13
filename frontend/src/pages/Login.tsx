@@ -1,58 +1,51 @@
-import { Card, Form, Input, Button, Typography, message } from "antd";
+import { Card, Form, Input, Button, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { signIn, signUp } from "../services/authService";
 import { useState } from "react";
-import { supabase } from "../services/supabaseClient";
+// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  loginUser,
+  signUpUser,
+  type LoginPayload,
+} from "../redux/slices/authSlice";
+import type { AppDispatch, RootState } from "../redux/redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 const Login: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
   const [isSignUp, setIsSignUp] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const onFinish = async (values: { email: string; password: string }) => {
-    setLoading(true);
+  const onFinish = async (values: LoginPayload) => {
     if (isSignUp) {
-      const { data, error } = await signUp(values.email, values.password);
-      setLoading(false);
-      if (!error && data?.user) {
-        await supabase.from("profiles").insert([
-          {
-            id: data.user.id, // ใช้ id จาก auth.users
-            email: values.email,
-            full_name: "", // หรือข้อมูลอื่น ๆ ที่ต้องการ
-            avatar_url: "",
-            role: "user",
-          },
-        ]);
-        message.success(
-          "Sign up successful! Please check your email to verify your account."
-        );
+      const res = await dispatch(signUpUser(values));
+      if (res.meta.requestStatus === "fulfilled") {
+        navigate("/");
       } else {
-        message.error(error?.message);
-        setIsSignUp(false);
+        console.error("Sign up failed:", res.payload);
       }
     } else {
-      const { data, error } = await signIn(values.email, values.password);
-      setLoading(false);
-      if (!error && data?.user) {
-        message.success("Login successful!");
+      const res = await dispatch(loginUser(values));
+      if (res.meta.requestStatus === "fulfilled") {
         navigate("/");
-      } else if (error) {
-        message.error(error.message);
+      } else {
+        console.error("Login failed:", res.payload);
       }
     }
   };
-  const handleGoogleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error) {
-      message.error(error.message);
-    }
-  };
+  // const handleGoogleSignIn = async () => {
+  //   const { error } = await supabase.auth.signInWithOAuth({
+  //     provider: "google",
+  //   });
+  //   if (error) {
+  //     message.error(error.message);
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -104,6 +97,7 @@ const Login: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
         <div className="text-center mt-2">
           <a href="/forgot-password" className="text-primary">
             Forgot password?
@@ -131,7 +125,7 @@ const Login: React.FC = () => {
               style={{ marginRight: 8 }}
             />
           }
-          onClick={handleGoogleSignIn}
+          // onClick={handleGoogleSignIn}
           style={{ marginBottom: 16, marginTop: 8 }}
         >
           Sign in with Google

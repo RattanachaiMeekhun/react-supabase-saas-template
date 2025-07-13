@@ -32,19 +32,19 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     try {
       // Switch to A4 mode before export
       setIsA4Mode(true);
-      
+
       // Wait for re-render
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       if (dashboardRef.current) {
-        await exportDashboardToPDF('dashboard-container', {
-          filename: `${title.replace(/\s+/g, '-').toLowerCase()}-dashboard.pdf`,
+        await exportDashboardToPDF("dashboard-container", {
+          filename: `${title.replace(/\s+/g, "-").toLowerCase()}-dashboard.pdf`,
           quality: 2,
-          orientation: 'portrait'
+          orientation: "portrait",
         });
       }
     } catch (error) {
-      console.error('Failed to export PDF:', error);
+      console.error("Failed to export PDF:", error);
     } finally {
       // Switch back to normal mode
       setIsA4Mode(false);
@@ -59,7 +59,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const a4Layouts: Layouts = {
     lg: ChartItem.map((item, i) => ({
       i: item.key,
-      x: (i % 2) * 6,   // 2 columns แนวนอน
+      x: (i % 2) * 6, // 2 columns แนวนอน
       y: Math.floor(i / 2) * 6,
       w: 6,
       h: 6,
@@ -73,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     })),
     sm: ChartItem.map((item, i) => ({
       i: item.key,
-      x: 0,              // Single column สำหรับ A4
+      x: 0, // Single column สำหรับ A4
       y: i * 5,
       w: 12,
       h: 5,
@@ -98,35 +98,35 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const layouts: Layouts = {
     lg: ChartItem.map((item, i) => ({
       i: item.key,
-      x: (i % 3) * 8,  // 3 columns, each 8 units wide
+      x: (i % 3) * 8, // 3 columns, each 8 units wide
       y: Math.floor(i / 3) * 10,
       w: 8,
       h: 10,
     })),
     md: ChartItem.map((item, i) => ({
       i: item.key,
-      x: (i % 2) * 10,  // 2 columns, each 10 units wide
+      x: (i % 2) * 10, // 2 columns, each 10 units wide
       y: Math.floor(i / 2) * 10,
       w: 10,
       h: 10,
     })),
     sm: ChartItem.map((item, i) => ({
       i: item.key,
-      x: (i % 2) * 6,   // 2 columns, each 6 units wide
+      x: (i % 2) * 6, // 2 columns, each 6 units wide
       y: Math.floor(i / 2) * 8,
       w: 6,
       h: 8,
     })),
     xs: ChartItem.map((item, i) => ({
       i: item.key,
-      x: 0,              // Single column
+      x: 0, // Single column
       y: i * 8,
       w: 8,
       h: 8,
     })),
     xxs: ChartItem.map((item, i) => ({
       i: item.key,
-      x: 0,              // Single column
+      x: 0, // Single column
       y: i * 6,
       w: 6,
       h: 6,
@@ -134,7 +134,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   };
 
   return (
-    <div className={`mx-6 min-h-screen ${isA4Mode ? 'max-w-4xl mx-auto' : ''}`}>
+    <div className={`mx-6 min-h-screen ${isA4Mode ? "max-w-4xl mx-auto" : ""}`}>
       <div className="flex justify-between items-center mb-4">
         <Typography.Title
           className="text-center text-sm mt-2 !text-white flex-1"
@@ -146,7 +146,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         >
           {title}
         </Typography.Title>
-        
+
         <Space>
           <Button
             type={isA4Mode ? "primary" : "default"}
@@ -155,7 +155,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           >
             {isA4Mode ? "Exit A4" : "A4 View"}
           </Button>
-          
+
           <Button
             type="primary"
             icon={<DownloadOutlined />}
@@ -166,51 +166,65 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           </Button>
         </Space>
       </div>
-      
-      <div 
-        id="dashboard-container" 
-        ref={dashboardRef} 
-        className={`relative ${isA4Mode ? 'bg-white shadow-lg rounded-lg p-8' : ''}`}
-        style={isA4Mode ? {
-          width: '794px',
-          minHeight: '1123px',
-          margin: '0 auto',
-          aspectRatio: '210/297' // A4 ratio
-        } : {}}
+
+      <div
+        id="dashboard-container"
+        ref={dashboardRef}
+        className={`relative ${
+          isA4Mode ? "bg-white shadow-lg rounded-lg p-8" : ""
+        }`}
+        style={
+          isA4Mode
+            ? {
+                width: "794px",
+                margin: "0 auto",
+              }
+            : {}
+        }
       >
-          {!isA4Mode && (
-            <div 
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
-                backgroundSize: '20px 20px'
-              }}
-            />
-          )}
-          <ResponsiveGridLayout
-            className={`layout border-2 rounded-lg ${isA4Mode ? 'border-gray-200' : ''}`}
-            layouts={isA4Mode ? a4Layouts : layouts}
-            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-            cols={isA4Mode ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 } : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }}
-            rowHeight={isA4Mode ? 40 : 20}
-            resizeHandles={["se", "sw", "ne", "nw"]}
-            draggableHandle=".drag-handle"
-            isDraggable={!isA4Mode}
-            isResizable={!isA4Mode}
-            style={isA4Mode ? {} : {border:"1px solid #392e4e", borderRadius: '0.5rem' }}
-          >
-            {ChartItem.map((item) => {
-              return (
-                <div
-                  key={item.key}
-                  className="border bg-white shadow rounded-lg relative"
-                >
-                  {ChartItemCard(item)}
-                </div>
-              );
-            })}
-          </ResponsiveGridLayout>
-    </div>
+        {!isA4Mode && (
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
+              backgroundSize: "20px 20px",
+            }}
+          />
+        )}
+        <ResponsiveGridLayout
+          className={`layout border-2 rounded-lg ${
+            isA4Mode ? "border-gray-200" : ""
+          }`}
+          layouts={isA4Mode ? a4Layouts : layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={
+            isA4Mode
+              ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }
+              : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }
+          }
+          rowHeight={isA4Mode ? 40 : 20}
+          resizeHandles={["se", "sw", "ne", "nw"]}
+          draggableHandle=".drag-handle"
+          isDraggable={!isA4Mode}
+          isResizable={!isA4Mode}
+          style={
+            isA4Mode
+              ? {}
+              : { border: "1px solid #392e4e", borderRadius: "0.5rem" }
+          }
+        >
+          {ChartItem.map((item) => {
+            return (
+              <div
+                key={item.key}
+                className="border bg-white shadow rounded-lg relative"
+              >
+                {ChartItemCard(item)}
+              </div>
+            );
+          })}
+        </ResponsiveGridLayout>
+      </div>
     </div>
   );
 };
