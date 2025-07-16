@@ -5,13 +5,20 @@ import "react-resizable/css/styles.css";
 import type { ChartLayoutItem } from "../Charts/TChartType";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/redux";
-import { Typography, Button, Space } from "antd";
-import { DownloadOutlined, FileTextOutlined } from "@ant-design/icons";
+import { Typography, Button, Space, Badge } from "antd";
+import { 
+  DownloadOutlined, 
+  DashboardOutlined,
+  EyeOutlined,
+  PlusOutlined
+} from "@ant-design/icons";
 import { setTitle } from "../../redux/slices/dashboardSlice";
 import ChartItemCard from "./ChartItemCard";
 import { exportDashboardToPDF } from "../../utils/pdfExport";
+import { EmptyState } from "../ETC/States";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
+const { Title, Text } = Typography;
 
 type DashboardProps = {
   ChartItem: ChartLayoutItem[];
@@ -25,7 +32,40 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const [isA4Mode, setIsA4Mode] = useState(false);
 
   if (!ChartItem || ChartItem.length === 0) {
-    return <div className="text-center text-gray-500">No charts available</div>;
+    return (
+      <div className="animate-fade-in">
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg">
+                  <DashboardOutlined className="text-white text-sm" />
+                </div>
+                <Title level={2} className="!mb-0 !text-text-primary">
+                  {title}
+                </Title>
+              </div>
+              <Text className="text-text-secondary">
+                Welcome to your analytics dashboard. Get started by adding your first chart.
+              </Text>
+            </div>
+          </div>
+        </div>
+        
+        <EmptyState
+          title="No Charts Available"
+          description="Start building your dashboard by adding charts and widgets to visualize your data."
+          action={{
+            text: "Add Chart",
+            icon: <PlusOutlined />,
+            onClick: () => {
+              // Handle add chart logic here
+              console.log("Add chart clicked");
+            }
+          }}
+        />
+      </div>
+    );
   }
 
   const handleExportPDF = async () => {
@@ -134,90 +174,114 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   };
 
   return (
-    <div className={`mx-6 min-h-screen ${isA4Mode ? "max-w-4xl mx-auto" : ""}`}>
-      <div className="flex justify-between items-center mb-4">
-        <Typography.Title
-          className="text-center text-sm mt-2 !text-white flex-1"
-          editable={{
-            onChange: (value) => {
-              dispatch(setTitle(value || "Dashboard"));
-            },
-          }}
-        >
-          {title}
-        </Typography.Title>
-
-        <Space>
-          <Button
-            type={isA4Mode ? "primary" : "default"}
-            icon={<FileTextOutlined />}
-            onClick={toggleA4Mode}
-          >
-            {isA4Mode ? "Exit A4" : "A4 View"}
-          </Button>
-
-          <Button
-            type="primary"
-            icon={<DownloadOutlined />}
-            onClick={handleExportPDF}
-            className="ml-2"
-          >
-            Export PDF
-          </Button>
-        </Space>
+    <div className="animate-fade-in">
+      {/* Modern Dashboard Header */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg">
+                <DashboardOutlined className="text-white text-sm" />
+              </div>
+              <Title
+                level={2}
+                className="!mb-0 !text-text-primary"
+                editable={{
+                  onChange: (value) => {
+                    dispatch(setTitle(value || "Dashboard"));
+                  },
+                }}
+              >
+                {title}
+              </Title>
+              <Badge 
+                count={ChartItem.length} 
+                className="bg-primary-100 text-primary-300"
+                style={{ backgroundColor: '#312e81', color: '#c4b5fd' }}
+              />
+            </div>
+            <Text className="text-text-secondary">
+              Welcome to your analytics dashboard. Monitor your key metrics in real-time.
+            </Text>
+          </div>
+          
+          <Space size="middle">
+            <Button
+              type={isA4Mode ? "primary" : "default"}
+              icon={<EyeOutlined />}
+              onClick={toggleA4Mode}
+              className={`shadow-lg hover:shadow-xl transition-all duration-200 border-border-primary ${
+                isA4Mode 
+                  ? 'bg-primary-500 border-primary-500' 
+                  : 'bg-dark-secondary text-text-secondary hover:bg-dark-hover hover:text-primary-400 border-border-primary'
+              }`}
+            >
+              {isA4Mode ? "Exit Preview" : "Print Preview"}
+            </Button>
+            
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              onClick={handleExportPDF}
+              className="shadow-lg hover:shadow-xl transition-all duration-200 bg-gradient-to-r from-primary-500 to-primary-600 border-0 hover:from-primary-600 hover:to-primary-700"
+            >
+              Export PDF
+            </Button>
+          </Space>
+        </div>
       </div>
 
-      <div
-        id="dashboard-container"
-        ref={dashboardRef}
-        className={`relative ${
-          isA4Mode ? "bg-white shadow-lg rounded-lg p-8" : ""
+      {/* Dashboard Container */}
+      <div 
+        id="dashboard-container" 
+        ref={dashboardRef} 
+        className={`transition-all duration-500 ${
+          isA4Mode 
+            ? 'bg-white shadow-2xl rounded-2xl p-8 mx-auto border border-gray-200' 
+            : 'relative'
         }`}
-        style={
-          isA4Mode
-            ? {
-                width: "794px",
-                margin: "0 auto",
-              }
-            : {}
-        }
+        style={isA4Mode ? {
+          width: '794px',
+          minHeight: '1123px',
+          aspectRatio: '210/297'
+        } : {}}
       >
+        {/* Modern Dark Dot Grid Background - Only in normal mode */}
         {!isA4Mode && (
-          <div
-            className="absolute inset-0 opacity-30"
+          <div 
+            className="absolute inset-0 opacity-10"
             style={{
-              backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
-              backgroundSize: "20px 20px",
+              backgroundImage: `radial-gradient(circle, #64748b 1px, transparent 1px)`,
+              backgroundSize: '20px 20px'
             }}
           />
         )}
+        
+        {/* Grid Layout */}
         <ResponsiveGridLayout
-          className={`layout border-2 rounded-lg ${
-            isA4Mode ? "border-gray-200" : ""
+          className={`layout rounded-xl transition-all duration-300 ${
+            isA4Mode 
+              ? 'border border-gray-200' 
+              : 'border border-border-primary shadow-2xl bg-dark-secondary/30 backdrop-blur-sm'
           }`}
           layouts={isA4Mode ? a4Layouts : layouts}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={
-            isA4Mode
-              ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }
-              : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }
-          }
+          cols={isA4Mode ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 } : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }}
           rowHeight={isA4Mode ? 40 : 20}
           resizeHandles={["se", "sw", "ne", "nw"]}
           draggableHandle=".drag-handle"
           isDraggable={!isA4Mode}
           isResizable={!isA4Mode}
-          style={
-            isA4Mode
-              ? {}
-              : { border: "1px solid #392e4e", borderRadius: "0.5rem" }
-          }
         >
           {ChartItem.map((item) => {
             return (
               <div
                 key={item.key}
-                className="border bg-white shadow rounded-lg relative"
+                className={`transition-all duration-300 rounded-xl relative overflow-hidden ${
+                  isA4Mode 
+                    ? 'bg-white border border-gray-200 shadow-sm' 
+                    : 'bg-dark-secondary border border-border-primary shadow-xl hover:shadow-2xl hover:scale-[1.02] hover:bg-dark-secondary/80 backdrop-blur-sm'
+                }`}
               >
                 {ChartItemCard(item)}
               </div>

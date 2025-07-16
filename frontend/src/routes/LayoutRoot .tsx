@@ -5,9 +5,10 @@ import {
   InfoCircleFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Button, Layout } from "antd";
+import { Button, Layout, Avatar, Space, Typography } from "antd";
 import BaseNavLink from "../components/Nav/BaseNavLink";
 import { useDispatch } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/redux";
@@ -16,6 +17,7 @@ import { checkAuthStatus } from "../redux/slices/authSlice";
 import Loader from "../components/ETC/Loader";
 
 const { Sider, Content, Header } = Layout;
+const { Text } = Typography;
 const LayoutRoot: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { isAuthenticated, loading } = useSelector((e: RootState) => e.auth);
@@ -37,8 +39,8 @@ const LayoutRoot: React.FC = () => {
   }
   if (!isAuthenticated) {
     return (
-      <Layout className="h-screen w-screen">
-        <Content className="bg-[#4F4557] flex items-center justify-center">
+      <Layout className="h-screen w-screen bg-dark-primary">
+        <Content className="bg-gradient-to-br from-dark-primary via-dark-secondary to-dark-tertiary flex items-center justify-center">
           <Outlet />
         </Content>
       </Layout>
@@ -46,18 +48,30 @@ const LayoutRoot: React.FC = () => {
   }
 
   return (
-    <Layout className="h-screen w-screen">
-      {/* Sider */}
+    <Layout className="h-screen w-screen bg-dark-primary">
+      {/* Modern Dark Sidebar */}
       <Sider
-        width={150}
-        className="bg-[#1d4ed8] border-r-2 border-[#27272a]"
+        width={collapsed ? 80 : 280}
+        className="bg-dark-secondary shadow-2xl border-r border-dark-quaternary transition-all duration-300"
         theme="dark"
         collapsed={collapsed}
+        collapsible
+        trigger={null}
       >
-        <div className="text-white flex flex-col h-full">
-          {/* Logo/Title */}
-          <div className="p-6 border-b border-[#27272a]">
-            <span className="font-bold text-xl text-white">My App</span>
+        <div className="h-full flex flex-col">
+          {/* Logo Section */}
+          <div className="p-6 border-b border-dark-quaternary">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-lg">S</span>
+              </div>
+              {!collapsed && (
+                <div>
+                  <Text className="text-lg font-semibold text-text-primary block">SaaS App</Text>
+                  <Text className="text-xs text-text-muted">Dark Dashboard</Text>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Navigation */}
@@ -66,47 +80,86 @@ const LayoutRoot: React.FC = () => {
               <BaseNavLink
                 to="/"
                 end
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="flex items-center w-full text-left px-4 py-3 rounded-xl hover:bg-dark-hover transition-all duration-200 text-text-secondary hover:text-primary-400 group"
               >
-                <HomeFilled /> {!collapsed && "Home"}
+                <HomeFilled className="text-lg group-hover:text-primary-400" />
+                {!collapsed && <span className="ml-3 font-medium">Dashboard</span>}
               </BaseNavLink>
+              
               <BaseNavLink
                 to="/about"
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="flex items-center w-full text-left px-4 py-3 rounded-xl hover:bg-dark-hover transition-all duration-200 text-text-secondary hover:text-primary-400 group"
               >
-                <InfoCircleFilled /> {!collapsed && "About"}
+                <InfoCircleFilled className="text-lg group-hover:text-primary-400" />
+                {!collapsed && <span className="ml-3 font-medium">Analytics</span>}
               </BaseNavLink>
+              
               <BaseNavLink
                 to="/contact"
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="flex items-center w-full text-left px-4 py-3 rounded-xl hover:bg-dark-hover transition-all duration-200 text-text-secondary hover:text-primary-400 group"
               >
-                <ContactsFilled /> {!collapsed && "Contact"}
+                <ContactsFilled className="text-lg group-hover:text-primary-400" />
+                {!collapsed && <span className="ml-3 font-medium">Settings</span>}
               </BaseNavLink>
             </div>
           </nav>
 
-          {/* User Info */}
-          <div className="p-4 border-t border-[#27272a]">
-            <span className="text-sm text-white">Welcome, User!</span>
+          {/* User Profile Section */}
+          <div className="p-4 border-t border-dark-quaternary">
+            <div className="flex items-center space-x-3">
+              <Avatar
+                size={collapsed ? 32 : 40}
+                icon={<UserOutlined />}
+                className="bg-gradient-to-br from-primary-500 to-primary-700 shadow-lg"
+              />
+              {!collapsed && (
+                <div className="flex-1">
+                  <Text className="text-sm font-medium text-text-primary block">John Doe</Text>
+                  <Text className="text-xs text-text-muted">Admin</Text>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Sider>
-      <Layout>
-        <Header className="bg-[#1d4ed8] text-white flex items-center justify-between !px-4 border-b-2 border-[#27272a]">
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              color: "white",
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
+
+      <Layout className="bg-dark-primary">
+        {/* Modern Dark Header */}
+        <Header className="bg-dark-secondary shadow-lg border-b border-dark-quaternary flex items-center justify-between px-6 h-16">
+          <div className="flex items-center space-x-4">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              className="text-text-secondary hover:text-primary-400 hover:bg-dark-hover rounded-lg transition-all duration-200"
+              size="large"
+            />
+            <div className="h-6 w-px bg-dark-quaternary" />
+            <div>
+              <Text className="text-lg font-semibold text-text-primary">Welcome back!</Text>
+            </div>
+          </div>
+          
+          <Space size="middle">
+            <Button 
+              type="text" 
+              className="text-text-secondary hover:text-primary-400 hover:bg-dark-hover"
+            >
+              Notifications
+            </Button>
+            <Avatar
+              size={36}
+              icon={<UserOutlined />}
+              className="bg-gradient-to-br from-primary-500 to-primary-700 cursor-pointer shadow-lg"
+            />
+          </Space>
         </Header>
-        <Content className="bg-[#4F4557] overflow-auto">
-          <Outlet />
+
+        {/* Main Content */}
+        <Content className="bg-dark-primary overflow-auto p-6">
+          <div className="animate-fade-in">
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>
