@@ -2,14 +2,22 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 import type { ChatRequest, ChatResponse } from "../types/aiTypes";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const genAI = new GoogleGenAI({});
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
+const genAI = process.env.GOOGLE_API_KEY 
+  ? new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY })
+  : null;
 
 export async function callOpenAI(
   messages: ChatRequest["messages"],
   temperature?: number,
   max_tokens?: number
 ): Promise<ChatResponse> {
+  if (!openai) {
+    throw new Error("OpenAI API key not configured");
+  }
+  
   const response = await openai.chat.completions.create({
     model: "gemini-2.5-flash",
     messages: messages,
@@ -32,6 +40,10 @@ export async function callGemini(
   temperature?: number,
   max_tokens?: number
 ): Promise<ChatResponse> {
+  if (!genAI) {
+    throw new Error("Google API key not configured");
+  }
+  
   // แปลง messages format จาก OpenAI เป็น Gemini
   const prompt = messages
     .map(
