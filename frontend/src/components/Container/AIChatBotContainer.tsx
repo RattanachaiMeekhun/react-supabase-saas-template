@@ -116,14 +116,13 @@ const AIChatBotContainer: React.FC<Props> = ({ onClose }) => {
                 <div className="prose prose-sm max-w-none">
                   <ReactMarkdown
                     components={{
-                      code({ node, className, children, ...props }) {
+                      code({ className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
                           <SyntaxHighlighter
-                            style={vscDarkPlus}
+                            style={vscDarkPlus as Record<string, React.CSSProperties>}
                             language={match[1]}
                             PreTag="div"
-                            {...props}
                           >
                             {String(children).replace(/\n$/, "")}
                           </SyntaxHighlighter>

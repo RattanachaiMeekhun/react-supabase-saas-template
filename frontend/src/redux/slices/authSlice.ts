@@ -42,7 +42,7 @@ export const checkAuthStatus = createAsyncThunk(
     try {
       const response = await axiosInstance.get("/auth/check");
       return response.data;
-    } catch (error) {
+    } catch {
       return rejectWithValue("Failed to check authentication status");
     }
   }
@@ -62,7 +62,7 @@ export const loginUser = createAsyncThunk<LoginResponse, LoginPayload>(
         return rejectWithValue(response.data.error);
       }
       return response.data;
-    } catch (error) {
+    } catch {
       return rejectWithValue("Login failed");
     }
   }
@@ -74,7 +74,7 @@ export const logoutUser = createAsyncThunk(
     try {
       const response = await axiosInstance.post("/auth/logout");
       return response.data;
-    } catch (error) {
+    } catch {
       return rejectWithValue("Logout failed");
     }
   }
@@ -94,7 +94,7 @@ export const signUpUser = createAsyncThunk(
         return rejectWithValue(response.data.error);
       }
       return response.data;
-    } catch (error) {
+    } catch {
       return rejectWithValue("Sign up failed");
     }
   }

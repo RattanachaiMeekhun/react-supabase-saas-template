@@ -11,7 +11,7 @@ const aiService = {
     });
     return response.data;
   },
-  dashboardSuggest: async (dataset: any, description?: string) => {
+  dashboardSuggest: async (dataset: unknown, description?: string) => {
     const response = await axiosInstance.post("/ai/dashboard-suggest", {
       dataset,
       description,

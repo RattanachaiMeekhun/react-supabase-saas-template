@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   ContactsFilled,
   HomeFilled,
@@ -6,21 +6,17 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Button, Layout } from "antd";
 import BaseNavLink from "../components/Nav/BaseNavLink";
-import { useDispatch } from "react-redux";
-import type { AppDispatch, RootState } from "../redux/redux";
 import { useSelector } from "react-redux";
-import { checkAuthStatus } from "../redux/slices/authSlice";
+import type { RootState } from "../redux/redux";
 import Loader from "../components/ETC/Loader";
 
 const { Sider, Content, Header } = Layout;
 const LayoutRoot: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { isAuthenticated, loading } = useSelector((e: RootState) => e.auth);
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  const { loading } = useSelector((e: RootState) => e.auth);
   // useEffect(() => {
   //   dispatch(checkAuthStatus()).then((res) => {
   //     if (res.meta.requestStatus === "rejected") {
