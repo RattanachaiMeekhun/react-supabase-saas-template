@@ -1,4 +1,5 @@
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
+import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 import Dashboard from "../components/Dashboard/Dashboard";
 
 const Home = () => {
@@ -207,7 +208,7 @@ const Home = () => {
     },
   ];
 
-  return <Dashboard ChartItem={chartItems} />;
+  return <AIChatBotContainer />;
 };
 
 export default Home;

@@ -21,29 +21,29 @@ const LayoutRoot: React.FC = () => {
   const { isAuthenticated, loading } = useSelector((e: RootState) => e.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(checkAuthStatus()).then((res) => {
-      if (res.meta.requestStatus === "rejected") {
-        console.error("Authentication check failed:", res.payload);
-        navigate("/login", { replace: true });
-      } else {
-        console.log("Authentication check successful:", res.payload);
-      }
-    });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(checkAuthStatus()).then((res) => {
+  //     if (res.meta.requestStatus === "rejected") {
+  //       console.error("Authentication check failed:", res.payload);
+  //       navigate("/login", { replace: true });
+  //     } else {
+  //       console.log("Authentication check successful:", res.payload);
+  //     }
+  //   });
+  // }, [dispatch]);
 
   if (loading) {
     return <Loader />;
   }
-  if (!isAuthenticated) {
-    return (
-      <Layout className="h-screen w-screen">
-        <Content className="bg-[#4F4557] flex items-center justify-center">
-          <Outlet />
-        </Content>
-      </Layout>
-    );
-  }
+  // if (!isAuthenticated) {
+  //   return (
+  //     <Layout className="h-screen w-screen">
+  //       <Content className="bg-[#4F4557] flex items-center justify-center">
+  //         <Outlet />
+  //       </Content>
+  //     </Layout>
+  //   );
+  // }
 
   return (
     <Layout className="h-screen w-screen">
