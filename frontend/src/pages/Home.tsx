@@ -1,8 +1,13 @@
+import { useState } from "react";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 import Dashboard from "../components/Dashboard/Dashboard";
+import { Button } from "antd";
+import { CommentOutlined } from "@ant-design/icons";
 
 const Home = () => {
+  const [showAIChat, setShowAIChat] = useState(false);
+  
   const chartItems: ChartLayoutItem[] = [
     {
       key: "bar",
@@ -208,7 +213,36 @@ const Home = () => {
     },
   ];
 
-  return <AIChatBotContainer />;
+  return (
+    <div className="relative min-h-screen">
+      {/* Dashboard */}
+      <Dashboard ChartItem={chartItems} />
+
+      {/* AI Assistant Button - Fixed position */}
+      {!showAIChat && (
+        <Button
+          type="primary"
+          shape="circle"
+          size="large"
+          icon={<CommentOutlined />}
+          onClick={() => setShowAIChat(true)}
+          className="fixed bottom-6 right-6 z-50 shadow-lg"
+          style={{
+            width: "60px",
+            height: "60px",
+            fontSize: "24px",
+          }}
+        />
+      )}
+
+      {/* AI Chat Modal/Overlay */}
+      {showAIChat && (
+        <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] shadow-2xl">
+          <AIChatBotContainer onClose={() => setShowAIChat(false)} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Home;

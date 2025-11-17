@@ -25,9 +25,8 @@ const userSlice = createSlice({
       state.email = "";
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: () => {
     // Add any additional reducers if needed
-    builder;
   },
 });
 
