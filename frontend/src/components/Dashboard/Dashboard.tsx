@@ -25,7 +25,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const [isA4Mode, setIsA4Mode] = useState(false);
 
   if (!ChartItem || ChartItem.length === 0) {
-    return <div className="text-center text-gray-500">No charts available</div>;
+    return (
+      <div className="text-center text-secondary">No charts available</div>
+    );
   }
 
   const handleExportPDF = async () => {
@@ -153,7 +155,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <div
           className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(circle, #9DB2BF 1px, transparent 1px)`,
             backgroundSize: "20px 20px",
           }}
         />
@@ -177,14 +179,14 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         style={
           isA4Mode
             ? {}
-            : { border: "1px solid #392e4e", borderRadius: "0.5rem" }
+            : { border: "1px solid #9DB2BF", borderRadius: "0.5rem" }
         }
       >
         {ChartItem.map((item) => {
           return (
             <div
               key={item.key}
-              className="border bg-white shadow rounded-lg relative"
+              className="border border-border bg-surface shadow rounded-lg relative"
             >
               {ChartItemCard(item)}
             </div>

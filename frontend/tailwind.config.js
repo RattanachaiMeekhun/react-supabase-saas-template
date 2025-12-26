@@ -8,19 +8,19 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#2563eb", // Blue 600
-          light: "#3b82f6", // Blue 500
-          dark: "#1d4ed8", // Blue 700
+          DEFAULT: "#DDE6ED", // Alice Blue - Highlights/Primary Text
+          light: "#ffffff",
+          dark: "#9DB2BF",
         },
         secondary: {
-          DEFAULT: "#6366f1", // Indigo 500
-          light: "#818cf8", // Indigo 400
-          dark: "#4f46e5", // Indigo 600
+          DEFAULT: "#9DB2BF", // Light Steel Blue - Secondary Text/Icons/Borders
+          light: "#b8c9d4",
+          dark: "#526D82",
         },
         accent: {
-          DEFAULT: "#06b6d4", // Cyan 500
-          light: "#22d3ee", // Cyan 400
-          dark: "#0891b2", // Cyan 600
+          DEFAULT: "#526D82", // Slate Blue - Surface/Cards
+          light: "#6a8498",
+          dark: "#27374D",
         },
         success: {
           DEFAULT: "#22c55e", // Green 500
@@ -38,14 +38,20 @@ module.exports = {
           dark: "#dc2626", // Red 600
         },
         background: {
-          DEFAULT: "#f8fafc", // Gray 50
-          dark: "#f1f5f9", // Gray 100
+          DEFAULT: "#27374D", // Vintage Navy - Main Background
+          dark: "#1e2b3c",
+          light: "#526D82",
         },
-        surface: "#fff",
-        border: "#e2e8f0", // Gray 200
+        surface: {
+          DEFAULT: "#526D82", // Slate Blue - Surface/Cards
+          light: "#6a8498",
+          dark: "#27374D",
+        },
+        border: "#9DB2BF", // Light Steel Blue - Borders
         text: {
-          primary: "#1e293b", // Gray 800
-          secondary: "#64748b", // Gray 500
+          primary: "#DDE6ED", // Alice Blue - Primary Text
+          secondary: "#9DB2BF", // Light Steel Blue - Secondary Text
+          inverse: "#27374D",
         },
       },
     },

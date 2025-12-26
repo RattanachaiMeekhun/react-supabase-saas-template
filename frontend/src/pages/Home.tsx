@@ -19,21 +19,19 @@ import {
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 import Dashboard from "../components/Dashboard/Dashboard";
-import { useState } from "react";
 import type { RootState } from "../redux/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from "../redux/slices/dashboardSlice";
 
-const { Sider, Content, Header } = Layout;
+const { Content, Header } = Layout;
 const { Title, Text } = Typography;
 
 const Home = () => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
   const dispatch = useDispatch();
 
-  const [hideChat, setHideChat] = useState(false);
   const { title } = useSelector((state: RootState) => state.dashboard);
 
   const chartItems: ChartLayoutItem[] = [
@@ -51,7 +49,7 @@ const Home = () => {
           {
             label: "ยอดขาย Q2/2025",
             data: [120, 90, 150, 60],
-            backgroundColor: ["#2563eb", "#06b6d4", "#22c55e", "#f59e42"],
+            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82", "#DDE6ED"],
           },
         ],
       },
@@ -73,8 +71,8 @@ const Home = () => {
           {
             label: "ผู้ใช้งานใหม่ 2025",
             data: [120, 135, 150, 170, 160, 180],
-            borderColor: "#6366f1",
-            backgroundColor: "rgba(99,102,241,0.2)",
+            borderColor: "#DDE6ED",
+            backgroundColor: "rgba(221, 230, 237, 0.2)",
             fill: true,
           },
         ],
@@ -97,7 +95,7 @@ const Home = () => {
           {
             label: "ช่องทาง",
             data: [55, 35, 10],
-            backgroundColor: ["#2563eb", "#06b6d4", "#f59e42"],
+            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82"],
           },
         ],
       },
@@ -119,7 +117,7 @@ const Home = () => {
           {
             label: "สมาชิก",
             data: [70, 25, 5],
-            backgroundColor: ["#22c55e", "#2563eb", "#ef4444"],
+            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82"],
           },
         ],
       },
@@ -147,8 +145,8 @@ const Home = () => {
           {
             label: "คะแนนเฉลี่ย",
             data: [8, 7, 9, 6, 8],
-            backgroundColor: "rgba(99,102,241,0.2)",
-            borderColor: "#6366f1",
+            backgroundColor: "rgba(221, 230, 237, 0.2)",
+            borderColor: "#DDE6ED",
           },
         ],
       },
@@ -170,7 +168,7 @@ const Home = () => {
           {
             label: "คำสั่งซื้อ",
             data: [80, 120, 60, 40],
-            backgroundColor: ["#06b6d4", "#22c55e", "#ef4444", "#f59e42"],
+            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82", "#27374D"],
           },
         ],
       },
@@ -192,17 +190,17 @@ const Home = () => {
           {
             label: "สินค้า A",
             data: [{ x: 100, y: 30, r: 15 }],
-            backgroundColor: "#2563eb",
+            backgroundColor: "#DDE6ED",
           },
           {
             label: "สินค้า B",
             data: [{ x: 80, y: 50, r: 10 }],
-            backgroundColor: "#06b6d4",
+            backgroundColor: "#9DB2BF",
           },
           {
             label: "สินค้า C",
             data: [{ x: 60, y: 20, r: 8 }],
-            backgroundColor: "#22c55e",
+            backgroundColor: "#526D82",
           },
         ],
       },
@@ -229,7 +227,7 @@ const Home = () => {
               { x: 40, y: 3000 },
               { x: 55, y: 2200 },
             ],
-            backgroundColor: "#6366f1",
+            backgroundColor: "#DDE6ED",
           },
         ],
       },
@@ -260,12 +258,13 @@ const Home = () => {
   ];
 
   return (
-    <Layout>
+    <Layout style={{ height: "100vh", overflow: "hidden" }}>
       <Content
         style={{
+          margin: "24px 16px",
           padding: 24,
           minHeight: 280,
-          background: "#f8fafc", // Very light blue-gray
+          background: "#27374D", // Main Background
           borderRadius: borderRadiusLG,
           overflow: "auto",
         }}
@@ -274,21 +273,22 @@ const Home = () => {
           <div>
             <Typography.Title
               level={2}
-              style={{ margin: 0, marginBottom: 8 }}
+              style={{ margin: 0, marginBottom: 8, color: "#DDE6ED" }}
               editable={{
                 onChange: (value) => {
                   dispatch(setTitle(value || "Dashboard"));
                 },
+                icon: <span style={{ color: "#DDE6ED" }}>✎</span>,
               }}
             >
               {title}
             </Typography.Title>
-            <Text type="secondary">
+            <Text style={{ color: "#9DB2BF" }}>
               Real-time insights and performance metrics for Q2 2025
             </Text>
           </div>
           <div className="hidden md:block">
-            <Text type="secondary">
+            <Text style={{ color: "#9DB2BF" }}>
               Last updated: {new Date().toLocaleDateString()}
             </Text>
           </div>

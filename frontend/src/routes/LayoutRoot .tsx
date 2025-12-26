@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   BellOutlined,
   ContactsFilled,
@@ -11,7 +11,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import {
   Avatar,
   Badge,
@@ -19,28 +19,19 @@ import {
   Dropdown,
   Layout,
   Space,
-  theme,
   Typography,
   type MenuProps,
 } from "antd";
 import BaseNavLink from "../components/Nav/BaseNavLink";
-import { useDispatch } from "react-redux";
-import type { AppDispatch, RootState } from "../redux/redux";
+import type { RootState } from "../redux/redux";
 import { useSelector } from "react-redux";
-import { checkAuthStatus } from "../redux/slices/authSlice";
 import Loader from "../components/ETC/Loader";
-import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 
 const { Title, Text } = Typography;
 const { Sider, Content, Header } = Layout;
 const LayoutRoot: React.FC = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
-  const { isAuthenticated, loading } = useSelector((e: RootState) => e.auth);
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  const { loading } = useSelector((e: RootState) => e.auth);
   const userMenu: MenuProps["items"] = [
     {
       key: "1",
@@ -87,14 +78,15 @@ const LayoutRoot: React.FC = () => {
       {/* Sider */}
       <Sider
         width={150}
-        className="bg-[#1d4ed8] border-r-2 border-[#27272a]"
+        className="bg-surface border-r border-border"
         theme="dark"
         collapsed={collapsed}
+        style={{ background: "#526D82" }}
       >
-        <div className="text-white flex flex-col h-full">
+        <div className="text-primary flex flex-col h-full">
           {/* Logo/Title */}
-          <div className="p-6 border-b border-[#27272a]">
-            <span className="font-bold text-xl text-white">My App</span>
+          <div className="p-6 border-b border-border">
+            <span className="font-bold text-xl text-primary">My App</span>
           </div>
 
           {/* Navigation */}
@@ -103,19 +95,19 @@ const LayoutRoot: React.FC = () => {
               <BaseNavLink
                 to="/"
                 end
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
               >
                 <HomeFilled /> {!collapsed && "Home"}
               </BaseNavLink>
               <BaseNavLink
                 to="/about"
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
               >
                 <InfoCircleFilled /> {!collapsed && "About"}
               </BaseNavLink>
               <BaseNavLink
                 to="/contact"
-                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors text-white"
+                className="block w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
               >
                 <ContactsFilled /> {!collapsed && "Contact"}
               </BaseNavLink>
@@ -123,20 +115,20 @@ const LayoutRoot: React.FC = () => {
           </nav>
 
           {/* User Info */}
-          <div className="p-4 border-t border-[#27272a]">
-            <span className="text-sm text-white">Welcome, User!</span>
+          <div className="p-4 border-t border-border">
+            <span className="text-sm text-primary">Welcome, User!</span>
           </div>
         </div>
       </Sider>
       <Layout>
         <Header
           style={{
-            background: colorBgContainer,
+            background: "#526D82",
             padding: "0 24px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
             zIndex: 10,
             height: 64,
           }}
@@ -146,17 +138,17 @@ const LayoutRoot: React.FC = () => {
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
-              color: "white",
+              color: "#DDE6ED",
               fontSize: "16px",
               width: 64,
               height: 64,
             }}
           />
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-surface font-bold text-xl shadow-sm">
               D
             </div>
-            <Title level={4} style={{ margin: 0, color: "#1f2937" }}>
+            <Title level={4} style={{ margin: 0, color: "#DDE6ED" }}>
               Business Analytics
             </Title>
           </div>
@@ -164,27 +156,37 @@ const LayoutRoot: React.FC = () => {
           <div className="flex items-center gap-2 md:gap-4">
             <Button
               type="text"
-              icon={<SearchOutlined className="text-lg" />}
-              className="hidden md:flex"
+              icon={<SearchOutlined className="text-lg text-primary" />}
+              className="hidden md:flex hover:bg-white/10"
             />
             <Badge count={5} size="small" offset={[-5, 5]}>
-              <Button type="text" icon={<BellOutlined className="text-lg" />} />
+              <Button
+                type="text"
+                icon={<BellOutlined className="text-lg text-primary" />}
+                className="hover:bg-white/10"
+              />
             </Badge>
             <Button
               type="text"
-              icon={<QuestionCircleOutlined className="text-lg" />}
-              className="hidden md:flex"
+              icon={<QuestionCircleOutlined className="text-lg text-primary" />}
+              className="hidden md:flex hover:bg-white/10"
             />
-            <div className="h-6 w-px bg-gray-200 mx-2 hidden md:block" />
+            <div className="h-6 w-px bg-border mx-2 hidden md:block" />
             <Dropdown menu={{ items: userMenu }} placement="bottomRight">
-              <Space className="cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <Space className="cursor-pointer hover:bg-white/10 p-2 rounded-lg transition-colors">
                 <Avatar
                   icon={<UserOutlined />}
-                  style={{ backgroundColor: "#3b82f6" }}
+                  style={{ backgroundColor: "#DDE6ED", color: "#526D82" }}
                 />
                 <div className="hidden md:block text-sm leading-tight">
-                  <Text strong>John Doe</Text>
-                  <Text type="secondary" className="text-xs">
+                  <Text strong style={{ color: "#DDE6ED" }}>
+                    John Doe
+                  </Text>
+                  <Text
+                    type="secondary"
+                    className="text-xs"
+                    style={{ color: "#9DB2BF" }}
+                  >
                     Admin
                   </Text>
                 </div>
@@ -192,7 +194,7 @@ const LayoutRoot: React.FC = () => {
             </Dropdown>
           </div>
         </Header>
-        <Content className="bg-[#4F4557] overflow-auto">
+        <Content className="bg-blend-darken overflow-auto">
           <Outlet />
         </Content>
       </Layout>
