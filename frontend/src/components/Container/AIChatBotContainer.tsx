@@ -87,10 +87,10 @@ const AIChatBotContainer: React.FC<Props> = ({}) => {
 
   if (!isOpen) {
     return (
-      <div className="h-full w-full flex items-end justify-end pointer-events-none">
+      <div className="relative bottom-4 right-4 h-full w-full flex items-end justify-end pointer-events-none">
         <button
           onClick={onOpen}
-          className="pointer-events-auto w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+          className="pointer-events-auto w-14 h-14 bg-linear-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
         >
           <MessageOutlined style={{ fontSize: "24px" }} />
         </button>
@@ -101,7 +101,7 @@ const AIChatBotContainer: React.FC<Props> = ({}) => {
   return (
     <div className="flex flex-col h-full w-full bg-white rounded-lg shadow-lg">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
+      <div className="flex items-center justify-between p-4 border-b bg-linear-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           <h3 className="font-semibold">AI Assistant</h3>
@@ -137,14 +137,13 @@ const AIChatBotContainer: React.FC<Props> = ({}) => {
                 <div className="prose prose-sm max-w-none">
                   <ReactMarkdown
                     components={{
-                      code({ className, children, ...props }) {
+                      code({ className, children, ref, ...props }) {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
                           <SyntaxHighlighter
-                            style={vscDarkPlus}
+                            style={vscDarkPlus as any}
                             language={match[1]}
                             PreTag="div"
-                            {...props}
                           >
                             {String(children).replace(/\n$/, "")}
                           </SyntaxHighlighter>

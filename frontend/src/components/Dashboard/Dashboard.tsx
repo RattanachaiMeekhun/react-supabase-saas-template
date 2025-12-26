@@ -134,65 +134,63 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   };
 
   return (
-    <div className={`mx-6 min-h-screen ${isA4Mode ? "max-w-4xl mx-auto" : ""}`}>
-      <div
-        id="dashboard-container"
-        ref={dashboardRef}
-        className={`relative ${
-          isA4Mode ? "bg-white shadow-lg rounded-lg p-8" : ""
+    <div
+      id="dashboard-container"
+      ref={dashboardRef}
+      className={`relative ${
+        isA4Mode ? "bg-white shadow-lg rounded-lg p-8" : ""
+      }`}
+      style={
+        isA4Mode
+          ? {
+              width: "794px",
+              margin: "0 auto",
+            }
+          : {}
+      }
+    >
+      {!isA4Mode && (
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
+            backgroundSize: "20px 20px",
+          }}
+        />
+      )}
+      <ResponsiveGridLayout
+        className={`layout border-2 rounded-lg ${
+          isA4Mode ? "border-gray-200" : ""
         }`}
+        layouts={isA4Mode ? a4Layouts : layouts}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={
+          isA4Mode
+            ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }
+            : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }
+        }
+        rowHeight={isA4Mode ? 40 : 20}
+        resizeHandles={["se", "sw", "ne", "nw"]}
+        draggableHandle=".drag-handle"
+        isDraggable={!isA4Mode}
+        isResizable={!isA4Mode}
         style={
           isA4Mode
-            ? {
-                width: "794px",
-                margin: "0 auto",
-              }
-            : {}
+            ? {}
+            : { border: "1px solid #392e4e", borderRadius: "0.5rem" }
         }
       >
-        {!isA4Mode && (
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
-              backgroundSize: "20px 20px",
-            }}
-          />
-        )}
-        <ResponsiveGridLayout
-          className={`layout border-2 rounded-lg ${
-            isA4Mode ? "border-gray-200" : ""
-          }`}
-          layouts={isA4Mode ? a4Layouts : layouts}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={
-            isA4Mode
-              ? { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }
-              : { lg: 24, md: 20, sm: 12, xs: 8, xxs: 6 }
-          }
-          rowHeight={isA4Mode ? 40 : 20}
-          resizeHandles={["se", "sw", "ne", "nw"]}
-          draggableHandle=".drag-handle"
-          isDraggable={!isA4Mode}
-          isResizable={!isA4Mode}
-          style={
-            isA4Mode
-              ? {}
-              : { border: "1px solid #392e4e", borderRadius: "0.5rem" }
-          }
-        >
-          {ChartItem.map((item) => {
-            return (
-              <div
-                key={item.key}
-                className="border bg-white shadow rounded-lg relative"
-              >
-                {ChartItemCard(item)}
-              </div>
-            );
-          })}
-        </ResponsiveGridLayout>
-      </div>
+        {ChartItem.map((item) => {
+          return (
+            <div
+              key={item.key}
+              className="border bg-white shadow rounded-lg relative"
+            >
+              {ChartItemCard(item)}
+            </div>
+          );
+        })}
+      </ResponsiveGridLayout>
     </div>
   );
 };
