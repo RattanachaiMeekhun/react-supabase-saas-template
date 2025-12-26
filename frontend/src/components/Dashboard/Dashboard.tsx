@@ -14,11 +14,11 @@ import { exportDashboardToPDF } from "../../utils/pdfExport";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 type DashboardProps = {
-  ChartItem: ChartLayoutItem[];
+  chartItems: ChartLayoutItem[];
 };
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { ChartItem } = props;
+  const { chartItems: ChartItem } = props;
   const { title } = useSelector((state: RootState) => state.dashboard);
   const dispatch = useDispatch();
   const dashboardRef = useRef<HTMLDivElement>(null);
@@ -135,38 +135,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
   return (
     <div className={`mx-6 min-h-screen ${isA4Mode ? "max-w-4xl mx-auto" : ""}`}>
-      <div className="flex justify-between items-center mb-4">
-        <Typography.Title
-          className="text-center text-sm mt-2 !text-white flex-1"
-          editable={{
-            onChange: (value) => {
-              dispatch(setTitle(value || "Dashboard"));
-            },
-          }}
-        >
-          {title}
-        </Typography.Title>
-
-        <Space>
-          <Button
-            type={isA4Mode ? "primary" : "default"}
-            icon={<FileTextOutlined />}
-            onClick={toggleA4Mode}
-          >
-            {isA4Mode ? "Exit A4" : "A4 View"}
-          </Button>
-
-          <Button
-            type="primary"
-            icon={<DownloadOutlined />}
-            onClick={handleExportPDF}
-            className="ml-2"
-          >
-            Export PDF
-          </Button>
-        </Space>
-      </div>
-
       <div
         id="dashboard-container"
         ref={dashboardRef}

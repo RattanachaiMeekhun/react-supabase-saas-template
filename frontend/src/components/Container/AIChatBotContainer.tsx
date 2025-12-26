@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import aiService from "../../services/aiCallService";
+import { MinusOutlined, MessageOutlined } from "@ant-design/icons";
 
 type Message = {
   id: string;
@@ -11,11 +12,9 @@ type Message = {
   timestamp: Date;
 };
 
-type Props = {
-  onClose?: () => void;
-};
+type Props = {};
 
-const AIChatBotContainer: React.FC<Props> = ({ onClose }) => {
+const AIChatBotContainer: React.FC<Props> = ({}) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -76,6 +75,29 @@ const AIChatBotContainer: React.FC<Props> = ({ onClose }) => {
       });
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+
+  if (!isOpen) {
+    return (
+      <div className="h-full w-full flex items-end justify-end pointer-events-none">
+        <button
+          onClick={onOpen}
+          className="pointer-events-auto w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+        >
+          <MessageOutlined style={{ fontSize: "24px" }} />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full w-full bg-white rounded-lg shadow-lg">
       {/* Header */}
@@ -84,14 +106,13 @@ const AIChatBotContainer: React.FC<Props> = ({ onClose }) => {
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           <h3 className="font-semibold">AI Assistant</h3>
         </div>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="text-white hover:bg-white/20 rounded p-1 transition"
-          >
-            ✕
-          </button>
-        )}
+
+        <button
+          onClick={onClose}
+          className="text-white hover:bg-white/20 rounded p-1 transition"
+        >
+          ✕
+        </button>
       </div>
 
       {/* Messages */}
@@ -116,7 +137,7 @@ const AIChatBotContainer: React.FC<Props> = ({ onClose }) => {
                 <div className="prose prose-sm max-w-none">
                   <ReactMarkdown
                     components={{
-                      code({ node, className, children, ...props }) {
+                      code({ className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
                           <SyntaxHighlighter

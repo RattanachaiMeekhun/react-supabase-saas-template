@@ -1,26 +1,63 @@
 import React, { use, useEffect, useState } from "react";
 import {
+  BellOutlined,
   ContactsFilled,
   HomeFilled,
   InfoCircleFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  QuestionCircleOutlined,
+  SearchOutlined,
+  SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Button, Layout } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Dropdown,
+  Layout,
+  Space,
+  theme,
+  Typography,
+  type MenuProps,
+} from "antd";
 import BaseNavLink from "../components/Nav/BaseNavLink";
 import { useDispatch } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/redux";
 import { useSelector } from "react-redux";
 import { checkAuthStatus } from "../redux/slices/authSlice";
 import Loader from "../components/ETC/Loader";
+import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 
+const { Title, Text } = Typography;
 const { Sider, Content, Header } = Layout;
 const LayoutRoot: React.FC = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
   const { isAuthenticated, loading } = useSelector((e: RootState) => e.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const userMenu: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Profile",
+      icon: <UserOutlined />,
+    },
+    {
+      key: "2",
+      label: "Settings",
+      icon: <SettingOutlined />,
+    },
+    {
+      key: "3",
+      label: "Logout",
+      danger: true,
+    },
+  ];
   // useEffect(() => {
   //   dispatch(checkAuthStatus()).then((res) => {
   //     if (res.meta.requestStatus === "rejected") {
@@ -92,7 +129,18 @@ const LayoutRoot: React.FC = () => {
         </div>
       </Sider>
       <Layout>
-        <Header className="bg-[#1d4ed8] text-white flex items-center justify-between !px-4 border-b-2 border-[#27272a]">
+        <Header
+          style={{
+            background: colorBgContainer,
+            padding: "0 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+            zIndex: 10,
+            height: 64,
+          }}
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -104,6 +152,45 @@ const LayoutRoot: React.FC = () => {
               height: 64,
             }}
           />
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">
+              D
+            </div>
+            <Title level={4} style={{ margin: 0, color: "#1f2937" }}>
+              Business Analytics
+            </Title>
+          </div>
+
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button
+              type="text"
+              icon={<SearchOutlined className="text-lg" />}
+              className="hidden md:flex"
+            />
+            <Badge count={5} size="small" offset={[-5, 5]}>
+              <Button type="text" icon={<BellOutlined className="text-lg" />} />
+            </Badge>
+            <Button
+              type="text"
+              icon={<QuestionCircleOutlined className="text-lg" />}
+              className="hidden md:flex"
+            />
+            <div className="h-6 w-px bg-gray-200 mx-2 hidden md:block" />
+            <Dropdown menu={{ items: userMenu }} placement="bottomRight">
+              <Space className="cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                <Avatar
+                  icon={<UserOutlined />}
+                  style={{ backgroundColor: "#3b82f6" }}
+                />
+                <div className="hidden md:block text-sm leading-tight">
+                  <Text strong>John Doe</Text>
+                  <Text type="secondary" className="text-xs">
+                    Admin
+                  </Text>
+                </div>
+              </Space>
+            </Dropdown>
+          </div>
         </Header>
         <Content className="bg-[#4F4557] overflow-auto">
           <Outlet />

@@ -1,8 +1,41 @@
+import {
+  Layout,
+  Avatar,
+  Badge,
+  Button,
+  Dropdown,
+  Space,
+  Typography,
+  theme,
+  type MenuProps,
+} from "antd";
+import {
+  UserOutlined,
+  BellOutlined,
+  SettingOutlined,
+  SearchOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 import Dashboard from "../components/Dashboard/Dashboard";
+import { useState } from "react";
+import type { RootState } from "../redux/redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setTitle } from "../redux/slices/dashboardSlice";
+
+const { Sider, Content, Header } = Layout;
+const { Title, Text } = Typography;
 
 const Home = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+  const dispatch = useDispatch();
+
+  const [hideChat, setHideChat] = useState(false);
+  const { title } = useSelector((state: RootState) => state.dashboard);
+
   const chartItems: ChartLayoutItem[] = [
     {
       key: "bar",
@@ -208,7 +241,66 @@ const Home = () => {
     },
   ];
 
-  return <AIChatBotContainer />;
+  const userMenu: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Profile",
+      icon: <UserOutlined />,
+    },
+    {
+      key: "2",
+      label: "Settings",
+      icon: <SettingOutlined />,
+    },
+    {
+      key: "3",
+      label: "Logout",
+      danger: true,
+    },
+  ];
+
+  return (
+    <Layout>
+      <Content
+        style={{
+          margin: "24px 16px",
+          padding: 24,
+          minHeight: 280,
+          background: "#f8fafc", // Very light blue-gray
+          borderRadius: borderRadiusLG,
+          overflow: "auto",
+        }}
+      >
+        <div className="mb-6 flex justify-between items-end">
+          <div>
+            <Typography.Title
+              level={2}
+              style={{ margin: 0, marginBottom: 8 }}
+              editable={{
+                onChange: (value) => {
+                  dispatch(setTitle(value || "Dashboard"));
+                },
+              }}
+            >
+              {title}
+            </Typography.Title>
+            <Text type="secondary">
+              Real-time insights and performance metrics for Q2 2025
+            </Text>
+          </div>
+          <div className="hidden md:block">
+            <Text type="secondary">
+              Last updated: {new Date().toLocaleDateString()}
+            </Text>
+          </div>
+        </div>
+        <Dashboard chartItems={chartItems} />
+      </Content>
+      <div className="absolute bottom-0 right-4 hidden lg:block w-96 h-3/4">
+        <AIChatBotContainer />
+      </div>
+    </Layout>
+  );
 };
 
 export default Home;
