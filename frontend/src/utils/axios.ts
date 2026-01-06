@@ -1,7 +1,7 @@
 //axios instance with base URL and headers
 import axios from "axios";
 export const axiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: "http://localhost:8000/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
       if (error.response.status === 401) {
         // ลบ token, redirect, หรือแจ้งเตือน
         localStorage.removeItem("access_token");
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
       // Handle error อื่นๆ
       // เช่น 403, 404, 500
