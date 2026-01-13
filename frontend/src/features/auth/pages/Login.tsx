@@ -7,12 +7,13 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../slice/auth/authThunks";
-import type { LoginPayload } from "../../slice/auth/authTypes";
+import { loginUser } from "../slice/authThunks";
+import type { LoginPayload } from "../slice/authTypes";
 import type { AppDispatch, RootState } from "../../../redux/redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Register from "./Register";
+import "./Auth.css";
 
 const { Title, Text } = Typography;
 
@@ -35,10 +36,10 @@ const Login: React.FC = () => {
   // If isSignUp is true, render the Register component
   if (isSignUp) {
     return (
-      <div className="h-full w-full flex items-center justify-center relative overflow-hidden p-4">
+      <div className="auth-container">
         {/* Animated background gradient */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="auth-bg-layer"
           style={{
             background:
               "radial-gradient(circle at 20% 50%, rgba(221, 230, 237, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(157, 178, 191, 0.3) 0%, transparent 50%)",
@@ -51,10 +52,10 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center relative overflow-hidden p-4">
+    <div className="auth-container">
       {/* Animated background circles */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="auth-bg-layer"
         style={{
           background:
             "radial-gradient(circle at 20% 50%, rgba(221, 230, 237, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(157, 178, 191, 0.3) 0%, transparent 50%)",
@@ -64,7 +65,7 @@ const Login: React.FC = () => {
 
       {/* Login Card */}
       <Card
-        className="relative z-10 animate-slideUp w-full overflow-y-auto"
+        className="auth-card"
         style={{
           maxWidth: 460,
           borderRadius: 16,
@@ -76,9 +77,9 @@ const Login: React.FC = () => {
         }}
       >
         {/* Header with icon */}
-        <div className="text-center mb-8">
+        <div className="auth-header">
           <div
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 animate-pulse-slow"
+            className="auth-icon"
             style={{
               background:
                 "linear-gradient(135deg, rgba(221, 230, 237, 0.2) 0%, rgba(157, 178, 191, 0.2) 100%)",
@@ -110,7 +111,7 @@ const Login: React.FC = () => {
         {/* Error Alert */}
         {error && (
           <div
-            className="mb-6 p-3 rounded-lg animate-shake"
+            className="auth-error"
             style={{
               backgroundColor: "rgba(255, 77, 79, 0.15)",
               border: "1px solid rgba(255, 77, 79, 0.3)",
@@ -145,7 +146,7 @@ const Login: React.FC = () => {
                 borderRadius: 8,
                 border: "1px solid rgba(157, 178, 191, 0.3)",
               }}
-              className="hover:border-primary transition-all"
+              className="auth-input-hover"
             />
           </Form.Item>
 
@@ -162,11 +163,11 @@ const Login: React.FC = () => {
                 borderRadius: 8,
                 border: "1px solid rgba(157, 178, 191, 0.3)",
               }}
-              className="hover:border-primary transition-all"
+              className="auth-input-hover"
             />
           </Form.Item>
 
-          <div className="text-right mb-4">
+          <div className="auth-forgot-password-container">
             <a
               href="/forgot-password"
               style={{
@@ -175,7 +176,7 @@ const Login: React.FC = () => {
                 textDecoration: "none",
                 fontWeight: 500,
               }}
-              className="hover:underline"
+              className="auth-link"
             >
               Forgot password?
             </a>
@@ -198,7 +199,7 @@ const Login: React.FC = () => {
                 border: "none",
                 boxShadow: "0 4px 12px rgba(221, 230, 237, 0.2)",
               }}
-              className="hover:scale-105 transition-transform"
+              className="auth-button-hover"
             >
               Sign In
             </Button>
@@ -225,14 +226,14 @@ const Login: React.FC = () => {
             fontSize: 15,
             background: "rgba(82, 109, 130, 0.5)",
           }}
-          className="hover:scale-105 transition-transform"
+          className="auth-button-hover"
         >
           Continue with Google
         </Button>
 
         {/* Sign Up Link */}
         <div
-          className="text-center mt-8 pt-6"
+          className="auth-footer-container"
           style={{ borderTop: "1px solid rgba(157, 178, 191, 0.2)" }}
         >
           <Space size={4}>

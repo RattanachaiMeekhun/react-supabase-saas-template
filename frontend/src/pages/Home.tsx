@@ -18,6 +18,7 @@ import {
 } from "@ant-design/icons";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import AIChatBotContainer from "../components/Container/AIChatBotContainer";
+import "./Home.css";
 import Dashboard from "../components/Dashboard/Dashboard";
 import type { RootState } from "../redux/redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -269,7 +270,7 @@ const Home = () => {
           overflow: "auto",
         }}
       >
-        <div className="mb-6 flex justify-between items-end">
+        <div className="dashboard-header">
           <div>
             <Typography.Title
               level={2}
@@ -287,7 +288,7 @@ const Home = () => {
               Real-time insights and performance metrics for Q2 2025
             </Text>
           </div>
-          <div className="hidden md:block">
+          <div className="last-updated">
             <Text style={{ color: "#9DB2BF" }}>
               Last updated: {new Date().toLocaleDateString()}
             </Text>
@@ -295,7 +296,7 @@ const Home = () => {
         </div>
         <Dashboard chartItems={chartItems} />
       </Content>
-      <div className="absolute bottom-0 right-4 hidden lg:block w-96 h-3/4">
+      <div className="chat-bot-container">
         <AIChatBotContainer />
       </div>
     </Layout>

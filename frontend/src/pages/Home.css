@@ -1,0 +1,29 @@
+.dashboard-header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.last-updated {
+  display: none;
+}
+@media (min-width: 768px) {
+  .last-updated {
+    display: block;
+  }
+}
+
+.chat-bot-container {
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  display: none;
+  width: 24rem;
+  height: 75%;
+}
+@media (min-width: 1024px) {
+  .chat-bot-container {
+    display: block;
+  }
+}

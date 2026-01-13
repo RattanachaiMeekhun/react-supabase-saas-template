@@ -3,6 +3,7 @@ import type { ChartData, ChartOptions } from "chart.js";
 import type { BaseChartType } from "./TChartType";
 import { useRef } from "react";
 import ChartDetailDisplay from "./ChartDetailDisplay";
+import "./Charts.css";
 
 type RadarChartProps = BaseChartType & {
   data: ChartData<"radar">;
@@ -14,12 +15,9 @@ const RadarChart: React.FC<RadarChartProps> = (props) => {
   const container = useRef(null);
 
   return (
-    <div
-      className="h-full w-full flex flex-col text-center pb-10"
-      ref={container}
-    >
+    <div className="chart-container-full chart-pb-10" ref={container}>
       <ChartDetailDisplay {...props} />
-      <div className="h-full w-full flex items-center justify-center overflow-hidden">
+      <div className="chart-center-container">
         {" "}
         <Radar
           data={data}

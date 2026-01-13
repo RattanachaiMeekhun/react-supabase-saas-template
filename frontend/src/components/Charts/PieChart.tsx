@@ -3,6 +3,7 @@ import type { ChartData, ChartOptions } from "chart.js";
 import type { BaseChartType } from "./TChartType";
 import ChartDetailDisplay from "./ChartDetailDisplay";
 import { useRef, useEffect } from "react";
+import "./Charts.css";
 
 type PieChartProps = BaseChartType & {
   data: ChartData<"pie">;
@@ -19,9 +20,9 @@ const PieChart: React.FC<PieChartProps> = (props) => {
   }, [data, options]);
 
   return (
-    <div className="h-full w-full flex flex-col text-center">
+    <div className="chart-container-full">
       <ChartDetailDisplay {...props} />
-      <div className="h-full w-full flex items-center justify-center overflow-hidden">
+      <div className="chart-center-container">
         <Pie
           ref={chartRef}
           data={data}

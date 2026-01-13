@@ -2,6 +2,7 @@ import { Bar } from "react-chartjs-2";
 import type { ChartData, ChartOptions } from "chart.js";
 import type { BaseChartType } from "./TChartType";
 import ChartDetailDisplay from "./ChartDetailDisplay";
+import "./Charts.css";
 
 type BarChartProps = BaseChartType & {
   data: ChartData<"bar">;
@@ -12,9 +13,9 @@ const BarChart: React.FC<BarChartProps> = (props) => {
   const { data, options, recommendation } = props;
 
   return (
-    <div className="h-full w-full flex flex-col text-center">
+    <div className="chart-container-full">
       <ChartDetailDisplay {...props} />
-      <div className="flex-1 min-h-0">
+      <div className="chart-flex-1">
         <Bar
           data={data}
           options={{ responsive: true, maintainAspectRatio: false, ...options }}
@@ -22,7 +23,7 @@ const BarChart: React.FC<BarChartProps> = (props) => {
         />
       </div>
       {recommendation && (
-        <div className="text-xs text-green-600 mt-2">{recommendation}</div>
+        <div className="chart-recommendation">{recommendation}</div>
       )}
     </div>
   );

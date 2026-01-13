@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dashboardReducer from "./slices/dashboardSlice"; // เพิ่ม slice สำหรับ dashboard
-import authReducer from "../features/slice/auth/authSlice"; // เพิ่ม slice สำหรับ authentication
+import authReducer from "../features/auth/slice/authSlice"; // เพิ่ม slice สำหรับ authentication
 
 // import chartReducer from "./slices/chartSlice"; // เพิ่ม slice อื่นได้
 

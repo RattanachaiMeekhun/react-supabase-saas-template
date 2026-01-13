@@ -6,10 +6,11 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { signUpUser } from "../../slice/auth/authThunks";
+import { signUpUser } from "../slice/authThunks";
 import type { AppDispatch, RootState } from "../../../redux/redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./Auth.css";
 
 const { Title, Text } = Typography;
 
@@ -74,7 +75,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
 
   return (
     <Card
-      className="relative z-10 animate-slideUp w-full overflow-y-auto"
+      className="auth-card"
       style={{
         maxWidth: 460,
         maxHeight: "calc(100vh - 32px)",
@@ -87,9 +88,9 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
       }}
     >
       {/* Header with icon */}
-      <div className="text-center mb-8">
+      <div className="auth-header">
         <div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 animate-pulse-slow"
+          className="auth-icon"
           style={{
             background:
               "linear-gradient(135deg, rgba(221, 230, 237, 0.2) 0%, rgba(157, 178, 191, 0.2) 100%)",
@@ -121,7 +122,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
       {/* Error Alert */}
       {error && (
         <div
-          className="mb-6 p-3 rounded-lg animate-shake"
+          className="auth-error"
           style={{
             backgroundColor: "rgba(255, 77, 79, 0.15)",
             border: "1px solid rgba(255, 77, 79, 0.3)",
@@ -154,7 +155,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
               borderRadius: 8,
               border: "1px solid rgba(157, 178, 191, 0.3)",
             }}
-            className="hover:border-primary transition-all"
+            className="auth-input-hover"
           />
         </Form.Item>
 
@@ -173,13 +174,13 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
               borderRadius: 8,
               border: "1px solid rgba(157, 178, 191, 0.3)",
             }}
-            className="hover:border-primary transition-all"
+            className="auth-input-hover"
           />
         </Form.Item>
 
         {/* Password Requirements */}
         <div
-          className="mb-4 p-3 rounded-lg"
+          className="auth-password-requirements"
           style={{
             backgroundColor: "rgba(221, 230, 237, 0.1)",
             border: "1px solid rgba(157, 178, 191, 0.2)",
@@ -233,7 +234,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
               borderRadius: 8,
               border: "1px solid rgba(157, 178, 191, 0.3)",
             }}
-            className="hover:border-primary transition-all"
+            className="auth-input-hover"
           />
         </Form.Item>
 
@@ -254,7 +255,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
               border: "none",
               boxShadow: "0 4px 12px rgba(221, 230, 237, 0.2)",
             }}
-            className="hover:scale-105 transition-transform"
+            className="auth-button-hover"
           >
             Sign Up
           </Button>
@@ -282,14 +283,14 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
             fontSize: 15,
             background: "rgba(82, 109, 130, 0.5)",
           }}
-          className="hover:scale-105 transition-transform"
+          className="auth-button-hover"
         >
           Continue with Google
         </Button>
         <Button
           type="text"
           size="large"
-          className="hover:scale-105 transition-transform"
+          className="auth-button-hover"
           style={{
             color: "#DDE6ED",
             fontWeight: 500,
@@ -300,13 +301,13 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         </Button>
       </Flex>
       {/* Terms and Privacy */}
-      <div className="text-center mt-6">
+      <div className="auth-footer">
         <Text style={{ color: "#9DB2BF", fontSize: 13 }}>
           By signing up, you agree to our{" "}
           <a
             href="/terms"
             style={{ color: "#DDE6ED", textDecoration: "none" }}
-            className="hover:underline"
+            className="auth-link"
           >
             Terms of Service
           </a>{" "}
@@ -314,7 +315,7 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
           <a
             href="/privacy"
             style={{ color: "#DDE6ED", textDecoration: "none" }}
-            className="hover:underline"
+            className="auth-link"
           >
             Privacy Policy
           </a>

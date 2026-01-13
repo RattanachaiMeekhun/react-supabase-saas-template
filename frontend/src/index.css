@@ -1,5 +1,4 @@
-@import "tailwindcss";
-
+/* Removed Tailwind import */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -13,6 +12,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -65,4 +72,22 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+:root {
+  --primary-color: #dde6ed;
+  --secondary-color: #9db2bf;
+  --surface-color: #526d82;
+  --background-color: #393646;
+  --border-color: rgba(157, 178, 191, 0.3);
+  --success-color: #22c55e;
+  --text-primary: #dde6ed;
+  --text-secondary: #9db2bf;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-secondary {
+  color: var(--text-secondary);
 }

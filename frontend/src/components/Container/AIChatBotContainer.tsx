@@ -4,6 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import aiService from "../../services/aiCallService";
 import { MessageOutlined } from "@ant-design/icons";
+import "./ChatBot.css";
 
 type Message = {
   id: string;
@@ -85,11 +86,8 @@ const AIChatBotContainer = () => {
 
   if (!isOpen) {
     return (
-      <div className="relative bottom-4 right-4 h-full w-full flex items-end justify-end pointer-events-none z-50">
-        <button
-          onClick={onOpen}
-          className="pointer-events-auto w-14 h-14 bg-surface text-primary rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform border-2 border-border"
-        >
+      <div className="chatbot-closed-container">
+        <button onClick={onOpen} className="chatbot-toggle-btn">
           <MessageOutlined style={{ fontSize: "24px" }} />
         </button>
       </div>
@@ -97,21 +95,18 @@ const AIChatBotContainer = () => {
   }
 
   return (
-    <div className="flex flex-col h-full w-full bg-surface rounded-lg shadow-2xl border border-border overflow-hidden z-50">
+    <div className="chatbot-main">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-surface text-primary border-b border-border shadow-sm">
+      <div className="chatbot-header">
         <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-            <div className="absolute inset-0 w-3 h-3 bg-success rounded-full animate-ping opacity-75"></div>
+          <div className="chatbot-status-indicator">
+            <div className="status-dot animate-pulse"></div>
+            <div className="status-ring animate-ping"></div>
           </div>
-          <h3 className="font-bold text-lg tracking-wide">AI Assistant</h3>
+          <h3 className="chatbot-title">AI Assistant</h3>
         </div>
 
-        <button
-          onClick={onClose}
-          className="text-primary hover:bg-background/20 hover:text-white rounded-full p-1.5 transition-colors duration-200"
-        >
+        <button onClick={onClose} className="chatbot-close-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -128,27 +123,25 @@ const AIChatBotContainer = () => {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background scroll-smooth">
+      <div className="chatbot-messages">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
+            className={`message-row ${
+              msg.role === "user" ? "message-row-user" : "message-row-assistant"
             }`}
           >
             <div
-              className={`max-w-[80%] p-3.5 rounded-2xl shadow-md ${
+              className={`message-bubble ${
                 msg.role === "user"
-                  ? "bg-primary text-background rounded-br-none"
-                  : "bg-surface text-primary rounded-bl-none border border-border/50"
+                  ? "message-bubble-user"
+                  : "message-bubble-assistant"
               }`}
             >
               {msg.role === "user" ? (
-                <p className="text-sm whitespace-pre-wrap font-medium">
-                  {msg.content}
-                </p>
+                <p className="message-text">{msg.content}</p>
               ) : (
-                <div className="prose prose-sm max-w-none prose-invert">
+                <div className="prose">
                   <ReactMarkdown
                     components={{
                       code({ className, children, ...props }) {
@@ -181,8 +174,8 @@ const AIChatBotContainer = () => {
                 </div>
               )}
               <span
-                className={`text-[10px] opacity-70 mt-1.5 block text-right ${
-                  msg.role === "user" ? "text-background/80" : "text-secondary"
+                className={`message-timestamp ${
+                  msg.role === "user" ? "user" : "assistant"
                 }`}
               >
                 {msg.timestamp.toLocaleTimeString("th-TH", {
@@ -194,12 +187,12 @@ const AIChatBotContainer = () => {
           </div>
         ))}
         {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-surface p-4 rounded-2xl rounded-bl-none border border-border/50 shadow-md">
-              <div className="flex gap-1.5">
-                <div className="w-2 h-2 bg-secondary rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-secondary rounded-full animate-bounce delay-100"></div>
-                <div className="w-2 h-2 bg-secondary rounded-full animate-bounce delay-200"></div>
+          <div className="message-row message-row-assistant">
+            <div className="message-bubble message-bubble-assistant">
+              <div className="loading-dots">
+                <div className="dot"></div>
+                <div className="dot dot-2"></div>
+                <div className="dot dot-3"></div>
               </div>
             </div>
           </div>
@@ -207,27 +200,27 @@ const AIChatBotContainer = () => {
       </div>
 
       {/* Input */}
-      <div className="p-4 bg-surface border-t border-border">
-        <div className="flex gap-2 items-center bg-background rounded-xl border border-border px-2 py-2 shadow-inner focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+      <div className="chatbot-input-area">
+        <div className="input-wrapper">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSend()}
             placeholder="พิมพ์ข้อความ..."
-            className="flex-1 px-3 py-1 bg-transparent text-primary placeholder-secondary focus:outline-none text-sm"
+            className="chat-input"
             disabled={isLoading}
           />
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="p-2 bg-primary text-background rounded-lg hover:bg-primary/90 disabled:bg-secondary/20 disabled:text-secondary disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
+            className="send-btn"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-5 h-5 transform rotate-[-45deg] translate-x-0.5 -translate-y-0.5"
+              className="w-5 h-5"
             >
               <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
             </svg>

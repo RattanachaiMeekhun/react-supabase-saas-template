@@ -27,7 +27,8 @@ import { useSelector } from "react-redux";
 import Loader from "../components/ETC/Loader";
 import { useDispatch } from "react-redux";
 import BaseNavLink from "../components/Nav/BaseNavLink";
-import { checkAuthStatus } from "../features/slice/auth/authThunks";
+import { checkAuthStatus } from "../features/auth/slice/authThunks";
+import "./LayoutRoot.css";
 
 const { Title, Text } = Typography;
 const { Sider, Content, Header } = Layout;
@@ -91,8 +92,8 @@ const LayoutRoot: React.FC = () => {
   }
   if (!isAuthenticated) {
     return (
-      <Layout className="h-screen w-screen overflow-hidden">
-        <Content className="flex items-center justify-center">
+      <Layout className="layout-root">
+        <Content className="center-content">
           <Outlet />
         </Content>
       </Layout>
@@ -100,12 +101,12 @@ const LayoutRoot: React.FC = () => {
   }
 
   return (
-    <Layout className="h-screen w-screen overflow-hidden">
+    <Layout className="layout-root">
       {/* Sider with responsive behavior */}
       <Sider
         width={isMobile ? 200 : 150}
         collapsedWidth={isMobile ? 0 : 80}
-        className="bg-surface border-r border-border"
+        className="sider-container"
         theme="dark"
         collapsed={collapsed}
         breakpoint="md"
@@ -123,50 +124,40 @@ const LayoutRoot: React.FC = () => {
           transition: "all 0.2s",
         }}
       >
-        <div className="text-primary flex flex-col h-full">
+        <div className="sider-content">
           {/* Logo/Title */}
           <div
-            className={`${
+            className={`logo-container ${
               collapsed && !isMobile ? "p-4" : "p-6"
-            } border-b border-border flex items-center justify-center`}
+            }`}
           >
             {collapsed && !isMobile ? (
               <div
-                className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-surface font-bold text-xl shadow-sm"
+                className="logo-collapsed"
                 style={{ background: "#DDE6ED", color: "#526D82" }}
               >
                 M
               </div>
             ) : (
-              <span className="font-bold text-xl text-primary">My App</span>
+              <span className="logo-text">My App</span>
             )}
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 overflow-y-auto">
-            <div className="space-y-2">
+          <nav className="nav-container">
+            <div className="nav-list">
               <div onClick={() => isMobile && setCollapsed(true)}>
-                <BaseNavLink
-                  to="/"
-                  end
-                  className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
-                >
-                  <HomeFilled className="text-lg flex-shrink-0" />
+                <BaseNavLink to="/" end className="nav-link">
+                  <HomeFilled className="nav-icon" />
                   {!collapsed && <span>Home</span>}
                 </BaseNavLink>
               </div>
-              <BaseNavLink
-                to="/about"
-                className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
-              >
-                <InfoCircleFilled className="text-lg flex-shrink-0" />
+              <BaseNavLink to="/about" className="nav-link">
+                <InfoCircleFilled className="nav-icon" />
                 {!collapsed && <span>About</span>}
               </BaseNavLink>
-              <BaseNavLink
-                to="/contact"
-                className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-primary"
-              >
-                <ContactsFilled className="text-lg flex-shrink-0" />
+              <BaseNavLink to="/contact" className="nav-link">
+                <ContactsFilled className="nav-icon" />
                 {!collapsed && <span>Contact</span>}
               </BaseNavLink>
             </div>
@@ -174,8 +165,10 @@ const LayoutRoot: React.FC = () => {
 
           {/* User Info */}
           {!collapsed && (
-            <div className="p-4 border-t border-border">
-              <span className="text-sm text-primary">Welcome, User!</span>
+            <div className="user-info-container">
+              <span className="text-sm" style={{ color: "#DDE6ED" }}>
+                Welcome, User!
+              </span>
             </div>
           )}
         </div>
@@ -184,12 +177,12 @@ const LayoutRoot: React.FC = () => {
       {/* Mobile overlay when sidebar is open */}
       {isMobile && !collapsed && (
         <div
-          className="fixed inset-0 bg-black/50 z-[999]"
+          className="mobile-overlay"
           onClick={() => setCollapsed(true)}
           style={{ backdropFilter: "blur(2px)" }}
         />
       )}
-      <Layout className="flex-1 overflow-hidden">
+      <Layout className="main-layout">
         <Header
           style={{
             background: "#526D82",
@@ -205,7 +198,7 @@ const LayoutRoot: React.FC = () => {
           }}
         >
           {/* Left Section */}
-          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          <div className="header-section">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -217,9 +210,9 @@ const LayoutRoot: React.FC = () => {
                 height: isMobile ? 48 : 64,
               }}
             />
-            <div className="flex items-center gap-2 sm:gap-4">
+            <div className="header-section">
               <div
-                className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-surface font-bold text-xl shadow-sm"
+                className="header-logo"
                 style={{ background: "#DDE6ED", color: "#526D82" }}
               >
                 D
@@ -227,7 +220,7 @@ const LayoutRoot: React.FC = () => {
               <Title
                 level={isMobile ? 5 : 4}
                 style={{ margin: 0, color: "#DDE6ED", whiteSpace: "nowrap" }}
-                className="hidden sm:block"
+                className="hidden-sm"
               >
                 Business Analytics
               </Title>
@@ -235,36 +228,36 @@ const LayoutRoot: React.FC = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
+          <div className="header-section-right">
             <Button
               type="text"
-              icon={<SearchOutlined className="text-lg text-primary" />}
-              className="hidden lg:flex hover:bg-white/10"
+              icon={<SearchOutlined className="header-icon" />}
+              className="header-icon-btn"
               style={{ color: "#DDE6ED" }}
             />
             <Badge count={5} size="small" offset={[-5, 5]}>
               <Button
                 type="text"
-                icon={<BellOutlined className="text-lg text-primary" />}
-                className="hover:bg-white/10"
+                icon={<BellOutlined className="header-icon" />}
+                className="header-icon-btn"
                 style={{ color: "#DDE6ED" }}
               />
             </Badge>
             <Button
               type="text"
-              icon={<QuestionCircleOutlined className="text-lg text-primary" />}
-              className="hidden lg:flex hover:bg-white/10"
+              icon={<QuestionCircleOutlined className="header-icon" />}
+              className="header-icon-btn"
               style={{ color: "#DDE6ED" }}
             />
-            <div className="h-6 w-px bg-border mx-1 sm:mx-2 hidden md:block" />
+            <div className="divider-vertical" />
             <Dropdown menu={{ items: userMenu }} placement="bottomRight">
-              <Space className="cursor-pointer hover:bg-white/10 p-1 sm:p-2 rounded-lg transition-colors">
+              <Space className="user-dropdown">
                 <Avatar
                   size={isMobile ? "small" : "default"}
                   icon={<UserOutlined />}
                   style={{ backgroundColor: "#DDE6ED", color: "#526D82" }}
                 />
-                <div className="hidden lg:block text-sm leading-tight">
+                <div className="user-dropdown-text">
                   <div>
                     <Text strong style={{ color: "#DDE6ED", display: "block" }}>
                       John Doe
@@ -287,13 +280,13 @@ const LayoutRoot: React.FC = () => {
 
         {/* Main Content */}
         <Content
-          className="bg-blend-darken overflow-auto"
+          className="content-wrapper"
           style={{
             padding: isMobile ? "16px" : "24px",
             minHeight: "calc(100vh - 64px)",
           }}
         >
-          <div className="max-w-full mx-auto">
+          <div className="content-inner">
             <Outlet />
           </div>
         </Content>
