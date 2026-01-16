@@ -28,7 +28,9 @@ func main() {
 	// Create HTTP server with flow handlers
 	mux := http.NewServeMux()
 	for _, action := range genkit.ListFlows(g) {
-		mux.HandleFunc("POST /"+action.Name(), genkit.Handler(action))
+		path := "/" + action.Name()
+		mux.HandleFunc(path, genkit.Handler(action))
+		log.Printf("Registered flow endpoint: POST %s", path)
 	}
 
 	// Start the HTTP server on port 8080
