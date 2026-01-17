@@ -1,21 +1,4 @@
-import {
-  Layout,
-  Avatar,
-  Badge,
-  Button,
-  Dropdown,
-  Space,
-  Typography,
-  theme,
-  type MenuProps,
-} from "antd";
-import {
-  UserOutlined,
-  BellOutlined,
-  SettingOutlined,
-  SearchOutlined,
-  QuestionCircleOutlined,
-} from "@ant-design/icons";
+import { Layout, Typography, theme } from "antd";
 import type { ChartLayoutItem } from "../components/Charts/TChartType";
 import AIChatBotContainer from "../components/Container/AIChatBotContainer";
 import "./Home.css";
@@ -24,8 +7,8 @@ import type { RootState } from "../redux/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from "../redux/slices/dashboardSlice";
 
-const { Content, Header } = Layout;
-const { Title, Text } = Typography;
+const { Content } = Layout;
+const { Text } = Typography;
 
 const Home = () => {
   const {
@@ -237,24 +220,6 @@ const Home = () => {
       y: 2,
       w: 2,
       h: 2,
-    },
-  ];
-
-  const userMenu: MenuProps["items"] = [
-    {
-      key: "1",
-      label: "Profile",
-      icon: <UserOutlined />,
-    },
-    {
-      key: "2",
-      label: "Settings",
-      icon: <SettingOutlined />,
-    },
-    {
-      key: "3",
-      label: "Logout",
-      danger: true,
     },
   ];
 
