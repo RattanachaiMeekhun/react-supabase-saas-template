@@ -1,19 +1,17 @@
-import { Layout, Typography, theme } from "antd";
-import type { ChartLayoutItem } from "../components/Charts/TChartType";
-import AIChatBotContainer from "../components/Container/AIChatBotContainer";
-import "./Home.css";
-import Dashboard from "../components/Dashboard/Dashboard";
-import type { RootState } from "../redux/redux";
+import { Layout, Typography } from "antd";
+import type { ChartLayoutItem } from "../../../components/Charts/TChartType";
+import AIChatBotContainer from "../../ai/components/AIChatBotContainer";
+import "./DashboardPage.css";
+import DashboardGrid from "../components/DashboardGrid";
+import type { RootState } from "../../../redux/redux";
 import { useDispatch, useSelector } from "react-redux";
-import { setTitle } from "../redux/slices/dashboardSlice";
+import { setTitle } from "../slice/dashboardSlice";
+import { themeColors } from "../../../themes/themeConfig";
 
-const { Content } = Layout;
 const { Text } = Typography;
+const { Content } = Layout;
 
-const Home = () => {
-  const {
-    token: { borderRadiusLG },
-  } = theme.useToken();
+const DashboardPage = () => {
   const dispatch = useDispatch();
 
   const { title } = useSelector((state: RootState) => state.dashboard);
@@ -33,7 +31,12 @@ const Home = () => {
           {
             label: "ยอดขาย Q2/2025",
             data: [120, 90, 150, 60],
-            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82", "#DDE6ED"],
+            backgroundColor: [
+              themeColors.primary,
+              themeColors.secondary,
+              themeColors.accent,
+              themeColors.primary,
+            ],
           },
         ],
       },
@@ -55,8 +58,8 @@ const Home = () => {
           {
             label: "ผู้ใช้งานใหม่ 2025",
             data: [120, 135, 150, 170, 160, 180],
-            borderColor: "#DDE6ED",
-            backgroundColor: "rgba(221, 230, 237, 0.2)",
+            borderColor: themeColors.primary,
+            backgroundColor: "rgba(29, 84, 109, 0.2)",
             fill: true,
           },
         ],
@@ -79,7 +82,11 @@ const Home = () => {
           {
             label: "ช่องทาง",
             data: [55, 35, 10],
-            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82"],
+            backgroundColor: [
+              themeColors.primary,
+              themeColors.secondary,
+              themeColors.accent,
+            ],
           },
         ],
       },
@@ -101,7 +108,11 @@ const Home = () => {
           {
             label: "สมาชิก",
             data: [70, 25, 5],
-            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82"],
+            backgroundColor: [
+              themeColors.primary,
+              themeColors.secondary,
+              themeColors.accent,
+            ],
           },
         ],
       },
@@ -129,8 +140,8 @@ const Home = () => {
           {
             label: "คะแนนเฉลี่ย",
             data: [8, 7, 9, 6, 8],
-            backgroundColor: "rgba(221, 230, 237, 0.2)",
-            borderColor: "#DDE6ED",
+            backgroundColor: "rgba(29, 84, 109, 0.2)",
+            borderColor: themeColors.primary,
           },
         ],
       },
@@ -152,7 +163,12 @@ const Home = () => {
           {
             label: "คำสั่งซื้อ",
             data: [80, 120, 60, 40],
-            backgroundColor: ["#DDE6ED", "#9DB2BF", "#526D82", "#27374D"],
+            backgroundColor: [
+              themeColors.primary,
+              themeColors.secondary,
+              themeColors.textSecondary,
+              themeColors.accent,
+            ],
           },
         ],
       },
@@ -174,17 +190,17 @@ const Home = () => {
           {
             label: "สินค้า A",
             data: [{ x: 100, y: 30, r: 15 }],
-            backgroundColor: "#DDE6ED",
+            backgroundColor: themeColors.primary,
           },
           {
             label: "สินค้า B",
             data: [{ x: 80, y: 50, r: 10 }],
-            backgroundColor: "#9DB2BF",
+            backgroundColor: themeColors.secondary,
           },
           {
             label: "สินค้า C",
             data: [{ x: 60, y: 20, r: 8 }],
-            backgroundColor: "#526D82",
+            backgroundColor: themeColors.accent,
           },
         ],
       },
@@ -211,7 +227,7 @@ const Home = () => {
               { x: 40, y: 3000 },
               { x: 55, y: 2200 },
             ],
-            backgroundColor: "#DDE6ED",
+            backgroundColor: themeColors.primary,
           },
         ],
       },
@@ -224,48 +240,41 @@ const Home = () => {
   ];
 
   return (
-    <Layout style={{ height: "100vh", overflow: "hidden" }}>
-      <Content
-        style={{
-          margin: "24px 16px",
-          padding: 24,
-          minHeight: 280,
-          background: "#27374D", // Main Background
-          borderRadius: borderRadiusLG,
-          overflow: "auto",
-        }}
-      >
-        <div className="dashboard-header">
-          <div>
-            <Typography.Title
-              level={2}
-              style={{ margin: 0, marginBottom: 8, color: "#DDE6ED" }}
-              editable={{
-                onChange: (value) => {
-                  dispatch(setTitle(value || "Dashboard"));
-                },
-                icon: <span style={{ color: "#DDE6ED" }}>✎</span>,
-              }}
-            >
-              {title}
-            </Typography.Title>
-            <Text style={{ color: "#9DB2BF" }}>
-              Real-time insights and performance metrics for Q2 2025
-            </Text>
-          </div>
-          <div className="last-updated">
-            <Text style={{ color: "#9DB2BF" }}>
-              Last updated: {new Date().toLocaleDateString()}
-            </Text>
-          </div>
+    <>
+      <div className="dashboard-header">
+        <div>
+          <Typography.Title
+            level={2}
+            style={{
+              margin: 0,
+              marginBottom: 8,
+              color: themeColors.textPrimary,
+            }}
+            editable={{
+              onChange: (value) => {
+                dispatch(setTitle(value || "Dashboard"));
+              },
+              icon: <span style={{ color: themeColors.textPrimary }}>✎</span>,
+            }}
+          >
+            {title}
+          </Typography.Title>
+          <Text style={{ color: themeColors.textSecondary }}>
+            Real-time insights and performance metrics for Q2 2025
+          </Text>
         </div>
-        <Dashboard chartItems={chartItems} />
-      </Content>
+        <div className="last-updated">
+          <Text style={{ color: themeColors.textSecondary }}>
+            Last updated: {new Date().toLocaleDateString()}
+          </Text>
+        </div>
+      </div>
+      <DashboardGrid chartItems={chartItems} />
       <div className="chat-bot-container">
         <AIChatBotContainer />
-      </div>
-    </Layout>
+      </div>{" "}
+    </>
   );
 };
 
-export default Home;
+export default DashboardPage;

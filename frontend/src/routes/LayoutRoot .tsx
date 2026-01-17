@@ -113,7 +113,7 @@ const LayoutRoot: React.FC = () => {
         collapsible
         trigger={null}
         style={{
-          background: "#526D82",
+          background: "var(--sidebar-bg)",
           overflow: "auto",
           height: "100vh",
           position: isMobile ? "fixed" : "relative",
@@ -134,12 +134,20 @@ const LayoutRoot: React.FC = () => {
             {collapsed && !isMobile ? (
               <div
                 className="logo-collapsed"
-                style={{ background: "#DDE6ED", color: "#526D82" }}
+                style={{
+                  background: "var(--sidebar-text)",
+                  color: "var(--primary-color)",
+                }}
               >
                 M
               </div>
             ) : (
-              <span className="logo-text">My App</span>
+              <span
+                className="logo-text"
+                style={{ color: "var(--sidebar-text)" }}
+              >
+                My App
+              </span>
             )}
           </div>
 
@@ -166,7 +174,10 @@ const LayoutRoot: React.FC = () => {
           {/* User Info */}
           {!collapsed && (
             <div className="user-info-container">
-              <span className="text-sm" style={{ color: "#DDE6ED" }}>
+              <span
+                className="text-sm"
+                style={{ color: "var(--sidebar-text)" }}
+              >
                 Welcome, User!
               </span>
             </div>
@@ -185,7 +196,7 @@ const LayoutRoot: React.FC = () => {
       <Layout className="main-layout">
         <Header
           style={{
-            background: "#526D82",
+            background: "var(--header-bg)",
             padding: isMobile ? "0 12px" : "0 24px",
             display: "flex",
             alignItems: "center",
@@ -204,7 +215,7 @@ const LayoutRoot: React.FC = () => {
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
               style={{
-                color: "#DDE6ED",
+                color: "var(--text-primary)",
                 fontSize: "16px",
                 width: isMobile ? 48 : 64,
                 height: isMobile ? 48 : 64,
@@ -213,13 +224,20 @@ const LayoutRoot: React.FC = () => {
             <div className="header-section">
               <div
                 className="header-logo"
-                style={{ background: "#DDE6ED", color: "#526D82" }}
+                style={{
+                  background: "var(--text-primary)",
+                  color: "var(--header-bg)",
+                }}
               >
                 D
               </div>
               <Title
                 level={isMobile ? 5 : 4}
-                style={{ margin: 0, color: "#DDE6ED", whiteSpace: "nowrap" }}
+                style={{
+                  margin: 0,
+                  color: "var(--text-primary)",
+                  whiteSpace: "nowrap",
+                }}
                 className="hidden-sm"
               >
                 Business Analytics
@@ -233,21 +251,21 @@ const LayoutRoot: React.FC = () => {
               type="text"
               icon={<SearchOutlined className="header-icon" />}
               className="header-icon-btn"
-              style={{ color: "#DDE6ED" }}
+              style={{ color: "var(--text-primary)" }}
             />
             <Badge count={5} size="small" offset={[-5, 5]}>
               <Button
                 type="text"
                 icon={<BellOutlined className="header-icon" />}
                 className="header-icon-btn"
-                style={{ color: "#DDE6ED" }}
+                style={{ color: "var(--text-primary)" }}
               />
             </Badge>
             <Button
               type="text"
               icon={<QuestionCircleOutlined className="header-icon" />}
               className="header-icon-btn"
-              style={{ color: "#DDE6ED" }}
+              style={{ color: "var(--text-primary)" }}
             />
             <div className="divider-vertical" />
             <Dropdown menu={{ items: userMenu }} placement="bottomRight">
@@ -255,11 +273,17 @@ const LayoutRoot: React.FC = () => {
                 <Avatar
                   size={isMobile ? "small" : "default"}
                   icon={<UserOutlined />}
-                  style={{ backgroundColor: "#DDE6ED", color: "#526D82" }}
+                  style={{
+                    backgroundColor: "var(--text-primary)",
+                    color: "var(--header-bg)",
+                  }}
                 />
                 <div className="user-dropdown-text">
                   <div>
-                    <Text strong style={{ color: "#DDE6ED", display: "block" }}>
+                    <Text
+                      strong
+                      style={{ color: "var(--text-primary)", display: "block" }}
+                    >
                       John Doe
                     </Text>
                   </div>
@@ -267,7 +291,10 @@ const LayoutRoot: React.FC = () => {
                     <Text
                       type="secondary"
                       className="text-xs"
-                      style={{ color: "#9DB2BF", display: "block" }}
+                      style={{
+                        color: "var(--text-secondary)",
+                        display: "block",
+                      }}
                     >
                       Admin
                     </Text>

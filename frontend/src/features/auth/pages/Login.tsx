@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Register from "./Register";
 import "./Auth.css";
+import { themeColors } from "../../../themes/themeConfig";
 
 const { Title, Text } = Typography;
 
@@ -41,8 +42,7 @@ const Login: React.FC = () => {
         <div
           className="auth-bg-layer"
           style={{
-            background:
-              "radial-gradient(circle at 20% 50%, rgba(221, 230, 237, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(157, 178, 191, 0.3) 0%, transparent 50%)",
+            background: `radial-gradient(circle at 20% 50%, ${themeColors.secondary}4D 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${themeColors.primary}4D 0%, transparent 50%)`,
             animation: "float 15s ease-in-out infinite",
           }}
         />
@@ -57,8 +57,7 @@ const Login: React.FC = () => {
       <div
         className="auth-bg-layer"
         style={{
-          background:
-            "radial-gradient(circle at 20% 50%, rgba(221, 230, 237, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(157, 178, 191, 0.3) 0%, transparent 50%)",
+          background: `radial-gradient(circle at 20% 50%, ${themeColors.secondary}4D 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${themeColors.primary}4D 0%, transparent 50%)`,
           animation: "float 15s ease-in-out infinite",
         }}
       />
@@ -69,10 +68,9 @@ const Login: React.FC = () => {
         style={{
           maxWidth: 460,
           borderRadius: 16,
-          boxShadow:
-            "0 10px 40px rgba(0, 0, 0, 0.3), 0 0 1px rgba(221, 230, 237, 0.1)",
-          border: "1px solid rgba(157, 178, 191, 0.2)",
-          background: "rgba(82, 109, 130, 0.95)",
+          boxShadow: `0 10px 40px rgba(0, 0, 0, 0.1), 0 0 1px ${themeColors.border}`,
+          border: `1px solid ${themeColors.border}`,
+          background: themeColors.surface,
           backdropFilter: "blur(10px)",
         }}
       >
@@ -81,17 +79,18 @@ const Login: React.FC = () => {
           <div
             className="auth-icon"
             style={{
-              background:
-                "linear-gradient(135deg, rgba(221, 230, 237, 0.2) 0%, rgba(157, 178, 191, 0.2) 100%)",
-              border: "2px solid rgba(221, 230, 237, 0.3)",
+              background: `linear-gradient(135deg, ${themeColors.primary}20 0%, ${themeColors.secondary}20 100%)`,
+              border: `2px solid ${themeColors.primary}4D`,
             }}
           >
-            <LoginOutlined style={{ fontSize: 28, color: "#DDE6ED" }} />
+            <LoginOutlined
+              style={{ fontSize: 28, color: themeColors.primary }}
+            />
           </div>
           <Title
             level={2}
             style={{
-              color: "#DDE6ED",
+              color: themeColors.textPrimary,
               marginBottom: 8,
               fontWeight: 600,
             }}
@@ -100,7 +99,7 @@ const Login: React.FC = () => {
           </Title>
           <Text
             style={{
-              color: "#9DB2BF",
+              color: themeColors.textSecondary,
               fontSize: 15,
             }}
           >
@@ -113,11 +112,11 @@ const Login: React.FC = () => {
           <div
             className="auth-error"
             style={{
-              backgroundColor: "rgba(255, 77, 79, 0.15)",
-              border: "1px solid rgba(255, 77, 79, 0.3)",
+              backgroundColor: `${themeColors.accent}1A`, // using accent as error bg? or red?
+              border: `1px solid ${themeColors.accent}4D`,
             }}
           >
-            <Text style={{ color: "#ff4d4f", fontSize: 14 }}>{error}</Text>
+            <Text style={{ color: "red", fontSize: 14 }}>{error}</Text>
           </div>
         )}
 
@@ -138,13 +137,17 @@ const Login: React.FC = () => {
           >
             <Input
               prefix={
-                <UserOutlined style={{ color: "#9DB2BF", fontSize: 18 }} />
+                <UserOutlined
+                  style={{ color: themeColors.primary, fontSize: 18 }}
+                />
               }
               placeholder="Enter your email"
               autoFocus
               style={{
                 borderRadius: 8,
-                border: "1px solid rgba(157, 178, 191, 0.3)",
+                border: `1px solid ${themeColors.border}`,
+                backgroundColor: "#fff",
+                color: themeColors.textPrimary,
               }}
               className="auth-input-hover"
             />
@@ -156,12 +159,15 @@ const Login: React.FC = () => {
           >
             <Input.Password
               prefix={
-                <LockOutlined style={{ color: "#9DB2BF", fontSize: 18 }} />
+                <LockOutlined
+                  style={{ color: themeColors.primary, fontSize: 18 }}
+                />
               }
               placeholder="Enter your password"
               style={{
                 borderRadius: 8,
-                border: "1px solid rgba(157, 178, 191, 0.3)",
+                border: `1px solid ${themeColors.border}`,
+                backgroundColor: "#fff",
               }}
               className="auth-input-hover"
             />
@@ -171,7 +177,7 @@ const Login: React.FC = () => {
             <a
               href="/forgot-password"
               style={{
-                color: "#DDE6ED",
+                color: themeColors.primary,
                 fontSize: 14,
                 textDecoration: "none",
                 fontWeight: 500,
@@ -194,10 +200,9 @@ const Login: React.FC = () => {
                 borderRadius: 8,
                 fontWeight: 600,
                 fontSize: 16,
-                background:
-                  "linear-gradient(135deg, rgba(221, 230, 237, 0.9) 0%, rgba(221, 230, 237, 0.8) 100%)",
+                background: themeColors.primary,
                 border: "none",
-                boxShadow: "0 4px 12px rgba(221, 230, 237, 0.2)",
+                boxShadow: `0 4px 12px ${themeColors.primary}33`,
               }}
               className="auth-button-hover"
             >
@@ -206,10 +211,10 @@ const Login: React.FC = () => {
           </Form.Item>
         </Form>
 
-        <Divider
-          style={{ borderColor: "rgba(157, 178, 191, 0.3)", margin: "24px 0" }}
-        >
-          <Text style={{ color: "#9DB2BF", fontSize: 13 }}>OR</Text>
+        <Divider style={{ borderColor: themeColors.border, margin: "24px 0" }}>
+          <Text style={{ color: themeColors.textSecondary, fontSize: 13 }}>
+            OR
+          </Text>
         </Divider>
 
         {/* Google Sign In */}
@@ -217,14 +222,14 @@ const Login: React.FC = () => {
           type="default"
           block
           icon={<GoogleOutlined style={{ fontSize: 18, color: "#4285F4" }} />}
-          // onClick={handleGoogleSignIn}
           style={{
             height: 48,
             borderRadius: 8,
-            border: "1px solid rgba(157, 178, 191, 0.3)",
+            border: `1px solid ${themeColors.border}`,
             fontWeight: 500,
             fontSize: 15,
-            background: "rgba(82, 109, 130, 0.5)",
+            background: "#fff",
+            color: themeColors.textPrimary,
           }}
           className="auth-button-hover"
         >
@@ -234,17 +239,17 @@ const Login: React.FC = () => {
         {/* Sign Up Link */}
         <div
           className="auth-footer-container"
-          style={{ borderTop: "1px solid rgba(157, 178, 191, 0.2)" }}
+          style={{ borderTop: `1px solid ${themeColors.border}` }}
         >
           <Space size={4}>
-            <Text style={{ color: "#9DB2BF", fontSize: 15 }}>
+            <Text style={{ color: themeColors.textSecondary, fontSize: 15 }}>
               Don't have an account?
             </Text>
             <Button
               type="link"
               onClick={() => setIsSignUp(true)}
               style={{
-                color: "#DDE6ED",
+                color: themeColors.primary,
                 fontWeight: 600,
                 padding: "0 4px",
                 height: "auto",
@@ -256,7 +261,6 @@ const Login: React.FC = () => {
           </Space>
         </div>
       </Card>
-
       {/* CSS Animations */}
       <style>{`
         @keyframes slideUp {
@@ -297,54 +301,6 @@ const Login: React.FC = () => {
             opacity: 0.8;
             transform: scale(1.05);
           }
-        }
-
-        @keyframes shake {
-          0%, 100% {
-            transform: translateX(0);
-          }
-          10%, 30%, 50%, 70%, 90% {
-            transform: translateX(-5px);
-          }
-          20%, 40%, 60%, 80% {
-            transform: translateX(5px);
-          }
-        }
-
-        .animate-slideUp {
-          animation: slideUp 0.6s ease-out;
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 3s ease-in-out infinite;
-        }
-
-        .animate-shake {
-          animation: shake 0.5s ease-in-out;
-        }
-
-        .hover\\:scale-105:hover {
-          transform: scale(1.05);
-        }
-
-        .transition-transform {
-          transition: transform 0.2s ease-in-out;
-        }
-
-        .transition-all {
-          transition: all 0.2s ease-in-out;
-        }
-
-        .hover\\:border-primary:hover {
-          border-color: #DDE6ED !important;
-        }
-
-        .hover\\:underline:hover {
-          text-decoration: underline;
         }
       `}</style>
     </div>

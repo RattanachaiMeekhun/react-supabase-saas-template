@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ChartLayoutItem } from "../../components/Charts/TChartType";
+import type { ChartLayoutItem } from "../../../components/Charts/TChartType";
 
 type DashboardState = {
   // state properties

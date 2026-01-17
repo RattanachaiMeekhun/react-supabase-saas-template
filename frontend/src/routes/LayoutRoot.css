@@ -2,6 +2,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  background: var(--surface-color);
 }
 
 .center-content {
@@ -11,12 +12,12 @@
 }
 
 .sider-container {
-  background-color: #526d82; /* fallback or variable */
+  background-color: var(--sidebar-bg); /* fallback or variable */
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sider-content {
-  color: #dde6ed;
+  color: var(--sidebar-text);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -39,12 +40,12 @@
 .logo-collapsed {
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #dde6ed;
+  background-color: var(--sidebar-text);
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #526d82;
+  color: var(--primary-color);
   font-weight: bold;
   font-size: 1.25rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -53,7 +54,7 @@
 .logo-text {
   font-weight: bold;
   font-size: 1.25rem;
-  color: #dde6ed;
+  color: var(--sidebar-text);
 }
 
 .nav-container {
@@ -76,8 +77,10 @@
   text-align: left;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
-  transition: background-color 0.2s, color 0.2s;
-  color: #dde6ed;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  color: var(--sidebar-text);
   text-decoration: none;
   cursor: pointer;
 }

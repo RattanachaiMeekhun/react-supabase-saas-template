@@ -1,5 +1,5 @@
-import { renderChartItem } from "../../helper/dashboardHelper";
-import type { ChartLayoutItem } from "../Charts/TChartType";
+import { renderChartItem } from "../utils/dashboardHelper";
+import type { ChartLayoutItem } from "../../../components/Charts/TChartType";
 import "./ChartItem.css";
 
 const ChartItemCard = (item: ChartLayoutItem) => {

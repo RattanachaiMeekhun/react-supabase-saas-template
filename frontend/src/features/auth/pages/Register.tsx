@@ -11,6 +11,7 @@ import type { AppDispatch, RootState } from "../../../redux/redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
+import { themeColors } from "../../../themes/themeConfig";
 
 const { Title, Text } = Typography;
 
@@ -80,10 +81,9 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         maxWidth: 460,
         maxHeight: "calc(100vh - 32px)",
         borderRadius: 16,
-        boxShadow:
-          "0 10px 40px rgba(0, 0, 0, 0.3), 0 0 1px rgba(221, 230, 237, 0.1)",
-        border: "1px solid rgba(157, 178, 191, 0.2)",
-        background: "rgba(82, 109, 130, 0.95)",
+        boxShadow: `0 10px 40px rgba(0, 0, 0, 0.1), 0 0 1px ${themeColors.border}`,
+        border: `1px solid ${themeColors.border}`,
+        background: themeColors.surface,
         backdropFilter: "blur(10px)",
       }}
     >
@@ -92,17 +92,18 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         <div
           className="auth-icon"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(221, 230, 237, 0.2) 0%, rgba(157, 178, 191, 0.2) 100%)",
-            border: "2px solid rgba(221, 230, 237, 0.3)",
+            background: `linear-gradient(135deg, ${themeColors.primary}20 0%, ${themeColors.secondary}20 100%)`,
+            border: `2px solid ${themeColors.primary}4D`,
           }}
         >
-          <UserAddOutlined style={{ fontSize: 28, color: "#DDE6ED" }} />
+          <UserAddOutlined
+            style={{ fontSize: 28, color: themeColors.primary }}
+          />
         </div>
         <Title
           level={2}
           style={{
-            color: "#DDE6ED",
+            color: themeColors.textPrimary,
             marginBottom: 8,
             fontWeight: 600,
           }}
@@ -111,11 +112,11 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         </Title>
         <Text
           style={{
-            color: "#9DB2BF",
+            color: themeColors.textSecondary,
             fontSize: 15,
           }}
         >
-          Sign up to get started
+          Join a community of innovators
         </Text>
       </div>
 
@@ -124,11 +125,11 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         <div
           className="auth-error"
           style={{
-            backgroundColor: "rgba(255, 77, 79, 0.15)",
-            border: "1px solid rgba(255, 77, 79, 0.3)",
+            backgroundColor: `${themeColors.accent}1A`,
+            border: `1px solid ${themeColors.accent}4D`,
           }}
         >
-          <Text style={{ color: "#ff4d4f", fontSize: 14 }}>{error}</Text>
+          <Text style={{ color: "red", fontSize: 14 }}>{error}</Text>
         </div>
       )}
 
@@ -148,12 +149,16 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
           ]}
         >
           <Input
-            prefix={<MailOutlined style={{ color: "#9DB2BF", fontSize: 18 }} />}
-            placeholder="Enter your email"
-            autoFocus
+            prefix={
+              <MailOutlined
+                style={{ color: themeColors.primary, fontSize: 18 }}
+              />
+            }
+            placeholder="Email address"
             style={{
               borderRadius: 8,
-              border: "1px solid rgba(157, 178, 191, 0.3)",
+              border: `1px solid ${themeColors.border}`,
+              backgroundColor: "#fff",
             }}
             className="auth-input-hover"
           />
@@ -165,52 +170,22 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
             { required: true, message: "Please input your password!" },
             { validator: validatePassword },
           ]}
-          hasFeedback
         >
           <Input.Password
-            prefix={<LockOutlined style={{ color: "#9DB2BF", fontSize: 18 }} />}
-            placeholder="Create a password"
+            prefix={
+              <LockOutlined
+                style={{ color: themeColors.primary, fontSize: 18 }}
+              />
+            }
+            placeholder="Create password"
             style={{
               borderRadius: 8,
-              border: "1px solid rgba(157, 178, 191, 0.3)",
+              border: `1px solid ${themeColors.border}`,
+              backgroundColor: "#fff",
             }}
             className="auth-input-hover"
           />
         </Form.Item>
-
-        {/* Password Requirements */}
-        <div
-          className="auth-password-requirements"
-          style={{
-            backgroundColor: "rgba(221, 230, 237, 0.1)",
-            border: "1px solid rgba(157, 178, 191, 0.2)",
-          }}
-        >
-          <Text
-            style={{
-              color: "#9DB2BF",
-              fontSize: 12,
-              display: "block",
-              marginBottom: 6,
-            }}
-          >
-            Password must contain:
-          </Text>
-          <ul
-            style={{
-              margin: 0,
-              paddingLeft: 20,
-              color: "#9DB2BF",
-              fontSize: 12,
-            }}
-          >
-            <li>At least 8 characters</li>
-            <li>One uppercase letter (A-Z)</li>
-            <li>One lowercase letter (a-z)</li>
-            <li>One number (0-9)</li>
-            <li>One special character (!@#$%^&*...)</li>
-          </ul>
-        </div>
 
         <Form.Item
           name="confirmPassword"
@@ -228,17 +203,22 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
           ]}
         >
           <Input.Password
-            prefix={<LockOutlined style={{ color: "#9DB2BF", fontSize: 18 }} />}
-            placeholder="Confirm your password"
+            prefix={
+              <LockOutlined
+                style={{ color: themeColors.primary, fontSize: 18 }}
+              />
+            }
+            placeholder="Confirm password"
             style={{
               borderRadius: 8,
-              border: "1px solid rgba(157, 178, 191, 0.3)",
+              border: `1px solid ${themeColors.border}`,
+              backgroundColor: "#fff",
             }}
             className="auth-input-hover"
           />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item style={{ marginBottom: 12 }}>
           <Button
             type="primary"
             htmlType="submit"
@@ -250,10 +230,9 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
               borderRadius: 8,
               fontWeight: 600,
               fontSize: 16,
-              background:
-                "linear-gradient(135deg, rgba(221, 230, 237, 0.9) 0%, rgba(221, 230, 237, 0.8) 100%)",
+              background: themeColors.primary,
               border: "none",
-              boxShadow: "0 4px 12px rgba(221, 230, 237, 0.2)",
+              boxShadow: `0 4px 12px ${themeColors.primary}33`,
             }}
             className="auth-button-hover"
           >
@@ -262,64 +241,56 @@ const Register: React.FC<RegisterProps> = ({ setIsSignUp }) => {
         </Form.Item>
       </Form>
 
-      <Divider
-        style={{ borderColor: "rgba(157, 178, 191, 0.3)", margin: "24px 0" }}
-      >
-        <Text style={{ color: "#9DB2BF", fontSize: 13 }}>OR</Text>
+      <Divider style={{ borderColor: themeColors.border, margin: "16px 0" }}>
+        <Text style={{ color: themeColors.textSecondary, fontSize: 13 }}>
+          OR
+        </Text>
       </Divider>
 
-      {/* Google Sign In */}
-      <Flex justify="center" vertical gap={10}>
-        <Button
-          type="default"
-          block
-          icon={<GoogleOutlined style={{ fontSize: 18, color: "#4285F4" }} />}
-          // onClick={handleGoogleSignIn}
-          style={{
-            height: 48,
-            borderRadius: 8,
-            border: "1px solid rgba(157, 178, 191, 0.3)",
-            fontWeight: 500,
-            fontSize: 15,
-            background: "rgba(82, 109, 130, 0.5)",
-          }}
-          className="auth-button-hover"
-        >
-          Continue with Google
-        </Button>
-        <Button
-          type="text"
-          size="large"
-          className="auth-button-hover"
-          style={{
-            color: "#DDE6ED",
-            fontWeight: 500,
-          }}
-          onClick={() => setIsSignUp(false)}
-        >
-          Already have an account? <strong>Sign In</strong>
-        </Button>
-      </Flex>
-      {/* Terms and Privacy */}
-      <div className="auth-footer">
-        <Text style={{ color: "#9DB2BF", fontSize: 13 }}>
-          By signing up, you agree to our{" "}
-          <a
-            href="/terms"
-            style={{ color: "#DDE6ED", textDecoration: "none" }}
-            className="auth-link"
+      <Button
+        type="default"
+        block
+        icon={<GoogleOutlined style={{ fontSize: 18, color: "#4285F4" }} />}
+        style={{
+          height: 48,
+          borderRadius: 8,
+          border: `1px solid ${themeColors.border}`,
+          fontWeight: 500,
+          fontSize: 15,
+          background: "#fff",
+          color: themeColors.textPrimary,
+        }}
+        className="auth-button-hover"
+      >
+        Sign up with Google
+      </Button>
+
+      <div
+        className="auth-footer-container"
+        style={{
+          borderTop: `1px solid ${themeColors.border}`,
+          marginTop: 24,
+          paddingTop: 16,
+        }}
+      >
+        <Flex justify="center" gap={4}>
+          <Text style={{ color: themeColors.textSecondary, fontSize: 15 }}>
+            Already have an account?
+          </Text>
+          <Button
+            type="link"
+            onClick={() => setIsSignUp(false)}
+            style={{
+              color: themeColors.primary,
+              fontWeight: 600,
+              padding: "0 4px",
+              height: "auto",
+            }}
+            className="hover:scale-105 transition-transform"
           >
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a
-            href="/privacy"
-            style={{ color: "#DDE6ED", textDecoration: "none" }}
-            className="auth-link"
-          >
-            Privacy Policy
-          </a>
-        </Text>
+            Sign In
+          </Button>
+        </Flex>
       </div>
     </Card>
   );

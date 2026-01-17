@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { Responsive, WidthProvider, type Layouts } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import type { ChartLayoutItem } from "../Charts/TChartType";
+import type { ChartLayoutItem } from "../../../components/Charts/TChartType";
 import ChartItemCard from "./ChartItemCard";
+import { themeColors } from "../../../themes/themeConfig";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -11,7 +12,7 @@ type DashboardProps = {
   chartItems: ChartLayoutItem[];
 };
 
-const Dashboard: React.FC<DashboardProps> = (props) => {
+const DashboardGrid: React.FC<DashboardProps> = (props) => {
   const { chartItems: ChartItem } = props;
   const dashboardRef = useRef<HTMLDivElement>(null);
 
@@ -70,7 +71,10 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         rowHeight={20}
         resizeHandles={["se", "sw", "ne", "nw"]}
         draggableHandle=".drag-handle"
-        style={{ border: "1px solid #9DB2BF", borderRadius: "0.5rem" }}
+        style={{
+          border: `1px solid ${themeColors.border}`,
+          borderRadius: "0.5rem",
+        }}
       >
         {ChartItem.map((item) => {
           return (
@@ -87,4 +91,4 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   );
 };
 
-export default Dashboard;
+export default DashboardGrid;

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutRoot from "./LayoutRoot ";
-import Home from "../pages/Home";
+import DashboardPage from "../features/dashboard/pages/DashboardPage";
 import Login from "../features/auth/pages/Login";
 
 const Router = () => {
@@ -8,7 +8,7 @@ const Router = () => {
     <Routes>
       <Route element={<LayoutRoot />}>
         <Route index path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<DashboardPage />} />
         <Route path="*" element={<>Not Found</>} />
       </Route>
     </Routes>

@@ -2,19 +2,26 @@ import Router from "./routes/Router";
 import "./chartjs-setup";
 import "./App.css";
 import { ConfigProvider, theme } from "antd";
+import { initializeTheme, themeColors } from "./themes/themeConfig";
+import { useLayoutEffect } from "react";
 
 function App() {
+  // Sync CSS variables with Ant Design tokens
+  useLayoutEffect(() => {
+    initializeTheme();
+  }, []);
+
   return (
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.defaultAlgorithm,
         token: {
-          colorPrimary: "#DDE6ED",
-          colorBgBase: "#27374D",
-          colorBgContainer: "#526D82",
-          colorText: "#DDE6ED",
-          colorTextSecondary: "#9DB2BF",
-          colorBorder: "#9DB2BF",
+          colorPrimary: themeColors.primary,
+          colorBgBase: themeColors.background,
+          colorBgContainer: themeColors.surface,
+          colorText: themeColors.textPrimary,
+          colorTextSecondary: themeColors.textSecondary,
+          colorBorder: themeColors.border,
         },
       }}
     >
